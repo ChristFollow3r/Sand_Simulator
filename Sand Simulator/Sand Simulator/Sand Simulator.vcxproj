@@ -133,6 +133,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="rectangle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mainF.h" />
+    <ClInclude Include="rectangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
