@@ -30,10 +30,6 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	SDL_FRect firstRenctangleRect = {300.0, 400.0, 100.0, 100.0};
-	SDL_Color firstRectangleColor = { 206, 17, 38 };
-	auto firstRectangle = std::make_shared<Rectangle>(firstRenctangleRect, firstRectangleColor, state.renderer);
-
 	while (running) {
 
 		SDL_Event event{0}; 
@@ -49,7 +45,6 @@ int main(int argc, char *argv[]) {
 		// Drawing commands
 		SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255); // Picks a color (white)
 		SDL_RenderClear(state.renderer); // Paints the screen
-		firstRectangle->DrawRectangle();
 		// Swap buffer and pressent
 		SDL_RenderPresent(state.renderer); // Presents the new painted screen
 	}
