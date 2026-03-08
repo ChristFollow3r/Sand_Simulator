@@ -136,8 +136,10 @@
     <ClCompile Include="rectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mainF.h" />
+    <ClInclude Include="world_manager.h" />
+    <ClInclude Include="utils.h" />
     <ClInclude Include="rectangle.h" />
+    <ClInclude Include="sand_grain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
