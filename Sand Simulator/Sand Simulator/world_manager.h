@@ -5,24 +5,25 @@
 
 const float gravityForce = 9.8f;
 
-Uint64 lastTick = SDL_GetTicks(); // Example: 4
+Uint64 lastTick = SDL_GetTicks();
 
 /// <summary>
 /// Gets time don't think too much about it
 /// </summary>
 /// <returns>The elapsed time</returns>
-Uint64 deltaTime() {
+float deltaTime() {
 
 	Uint64 currentTick = SDL_GetTicks(); // Example: 5 ---> 6
 	Uint64 elapsedTick = currentTick - lastTick; // Example: 5 - 4 ----> 6 - 5 ...
 	lastTick = currentTick; // 5
 
-	return elapsedTick / 1000.0;
+	return static_cast<float>(elapsedTick / 1000.0);
 }
 
-void ApplyGravity(Uint64 deltaTime, std::shared_ptr<SandGrain> sandGrain) { // Check this. Smells like a bug tbh
+void ApplyGravity(std::shared_ptr<SandGrain> sandGrain) { // Check this. Smells like a bug tbh
 
-	sandGrain->velocityY += gravityForce * sandGrain->GetMass() * deltaTime;
-	sandGrain->positionY += sandGrain->velocityY * deltaTime;
+	float dt = deltaTime();
+	sandGrain->velocityY += gravityForce * sandGrain->GetMass() * dt;
+	sandGrain->positionY += sandGrain->velocityY * dt;
 	sandGrain->rect.y = sandGrain->positionY;
 }

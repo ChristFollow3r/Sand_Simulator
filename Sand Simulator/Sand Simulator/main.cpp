@@ -33,13 +33,13 @@ int main(int argc, char *argv[]) {
 	}
 
 	// Sand grain
-	SDL_FRect rect = { 400, 600, 50, 50 };
+	SDL_FRect rect = { 400, 200, 50, 50 };
 	SDL_Color color = { 206, 17, 38, 255 };
 
-	//float positionX = rect.x;
-	//float positionY = rect.y;
+	float positionX = rect.x;
+	float positionY = rect.y;
 
-	//auto firstGrain = std::make_shared<SandGrain>(rect, color, state.renderer, positionX, positionY);
+	auto firstGrain = std::make_shared<SandGrain>(rect, color, state.renderer, positionX, positionY);
 	//auto rectangle = std::make_shared<Rectangle>(rect, color, state.renderer);
 	// Sand grain
 
@@ -66,10 +66,9 @@ int main(int argc, char *argv[]) {
 		SDL_RenderClear(state.renderer); // Paints the screen
 
 
-		SDL_SetRenderDrawColor(state.renderer, color.r, color.g, color.b, color.a);
-		SDL_RenderFillRect(state.renderer, &rect);
 
-		//ApplyGravity(deltaTime(), firstGrain);
+		firstGrain->DrawRectangle();
+		ApplyGravity(firstGrain);
 
 		// Swap buffer and pressent
 		SDL_RenderPresent(state.renderer); // Presents the new painted screen
