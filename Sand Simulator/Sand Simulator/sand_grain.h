@@ -24,5 +24,5 @@ class SandGrain : public Rectangle {
 
 	private:
 
-		const float mass = 0.07;
+		const float mass = 20;
 };

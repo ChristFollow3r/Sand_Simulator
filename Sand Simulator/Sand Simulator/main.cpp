@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	// Sand grain
-	SDL_FRect rect = { 400, 200, 50, 50 };
+	SDL_FRect rect = { 400, 200, 15, 15 };
 	SDL_Color color = { 206, 17, 38, 255 };
 
 	float positionX = rect.x;
