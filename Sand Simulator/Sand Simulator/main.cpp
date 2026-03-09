@@ -32,17 +32,12 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	// Sand grain
+	// Sand grain *************************************************************************************
 	SDL_FRect rect = { 400, 200, 15, 15 };
 	SDL_Color color = { 206, 17, 38, 255 };
 
-	float positionX = rect.x;
-	float positionY = rect.y;
-
-	auto firstGrain = std::make_shared<SandGrain>(rect, color, state.renderer, positionX, positionY);
-	//auto rectangle = std::make_shared<Rectangle>(rect, color, state.renderer);
-	// Sand grain
-
+	auto firstGrain = std::make_shared<SandGrain>(rect, color, state.renderer);
+	// ************************************************************************************************
 
 	while (running) {
 
@@ -58,9 +53,6 @@ int main(int argc, char *argv[]) {
 			
 
 		// Drawing commands
-
-		//firstGrain->DrawRectangle();
-		//rectangle->DrawRectangle();
 
 		SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255); // Picks a color (white)
 		SDL_RenderClear(state.renderer); // Paints the screen

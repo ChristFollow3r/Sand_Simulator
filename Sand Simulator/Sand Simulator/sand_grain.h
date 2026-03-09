@@ -5,22 +5,18 @@
 #include "rectangle.h"
 
 /// <summary>
-/// A sand garin. Takes: Rectangle::(rect, color, *renderer), currentPosition, lastPosition, mass
+/// A sand garin. Takes: Rectangle::(rect, color, *renderer)
 /// </summary>
 class SandGrain : public Rectangle {
 
 	public:
 
 		float velocityY = 0;
-		float positionX = 0;
-		float positionY = 0;
 
-		SandGrain(SDL_FRect rect, SDL_Color color, SDL_Renderer *renderer, float positionX, float positionY) 
-			: Rectangle(rect, color, renderer), positionX(positionX), positionY(positionY) {}
+		SandGrain(SDL_FRect rect, SDL_Color color, SDL_Renderer *renderer) : Rectangle(rect, color, renderer) {}
 
 		float GetMass() { return this->mass; };
 
-		// To do: Fill the sand grains here instead of in main
 
 	private:
 

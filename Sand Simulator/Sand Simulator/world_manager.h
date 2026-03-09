@@ -1,7 +1,8 @@
 #pragma once
+#include <SDL3/SDL.h>
 #include <memory>
 #include "sand_grain.h"
-#include <SDL3/SDL.h>
+#include "utils.h"
 
 const float gravityForce = 9.8f;
 
@@ -24,6 +25,5 @@ void ApplyGravity(std::shared_ptr<SandGrain> sandGrain) { // Check this. Smells 
 
 	float dt = deltaTime();
 	sandGrain->velocityY += gravityForce * sandGrain->GetMass() * dt;
-	sandGrain->positionY += sandGrain->velocityY * dt;
-	sandGrain->rect.y = sandGrain->positionY;
+	sandGrain->rect.y += sandGrain->velocityY * dt;
 }

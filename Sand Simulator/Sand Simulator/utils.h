@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <SDL3/SDL.h>
 
 const int width = 800;
@@ -8,3 +9,9 @@ struct SDL_State {
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 };
+
+std::pair<float, float> mousePosition() {
+	float x, y;
+	SDL_GetMouseState(&x, &y);
+	return { x,y };
+}
