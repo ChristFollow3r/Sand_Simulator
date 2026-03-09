@@ -5,12 +5,15 @@
 #include "sand_grain.h"
 #include "rectangle.h"
 #include "world_manager.h"
+#include <vector>
 
 void cleanUp(SDL_State& state);
 
 int main(int argc, char *argv[]) {
 
-	SDL_State state;	
+	SDL_State state;
+	Uint64 lastTick = SDL_GetTicks();
+	deltaTime(lastTick);
 	bool running = true;
 
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -31,13 +34,8 @@ int main(int argc, char *argv[]) {
 		cleanUp(state);
 		return 1;
 	}
-
-	// Sand grain *************************************************************************************
-	SDL_FRect rect = { 400, 200, 15, 15 };
-	SDL_Color color = { 206, 17, 38, 255 };
-
-	auto firstGrain = std::make_shared<SandGrain>(rect, color, state.renderer);
-	// ************************************************************************************************
+	
+	std::vector<std::shared_ptr<SandGrain>> sand;
 
 	while (running) {
 
@@ -45,25 +43,34 @@ int main(int argc, char *argv[]) {
 		while (SDL_PollEvent(&event)) {
 
 			switch (event.type) {
+
 				case (SDL_EVENT_QUIT):
 					running = false;
 					break;
+
+				case (SDL_EVENT_MOUSE_BUTTON_DOWN):
+
+					float x;
+					float y;
+					SDL_GetMouseState(&x, &y);
+
+					SDL_FRect rect = { x, y, 15, 15 };
+					SDL_Color color = { 158, 144, 80, 255 };
+
+					auto sandGrain = std::make_shared<SandGrain>(rect, color, state.renderer);
+					sand.push_back(sandGrain);
 			}
 		}	
 			
+		SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
+		SDL_RenderClear(state.renderer);
+		float dt = deltaTime(lastTick);
 
-		// Drawing commands
-
-		SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255); // Picks a color (white)
-		SDL_RenderClear(state.renderer); // Paints the screen
-
-
-
-		firstGrain->DrawRectangle();
-		ApplyGravity(firstGrain);
-
-		// Swap buffer and pressent
-		SDL_RenderPresent(state.renderer); // Presents the new painted screen
+		for (auto x : sand) {
+			x->DrawRectangle();
+			ApplyGravity(x, dt);
+		}
+		SDL_RenderPresent(state.renderer); 
 	}
 
 	cleanUp(state);

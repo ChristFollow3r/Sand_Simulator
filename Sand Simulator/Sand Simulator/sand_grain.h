@@ -17,7 +17,6 @@ class SandGrain : public Rectangle {
 
 		float GetMass() { return this->mass; };
 
-
 	private:
 
 		const float mass = 20;

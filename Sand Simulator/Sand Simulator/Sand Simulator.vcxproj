@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rectangle.cpp" />
+    <ClCompile Include="world_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="world_manager.h" />
