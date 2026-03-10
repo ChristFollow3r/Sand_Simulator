@@ -10,7 +10,11 @@ float deltaTime(Uint64& lastTick) {
 }
 
 void ApplyGravity(std::shared_ptr<SandGrain> sandGrain, float dt) {
-
 	sandGrain->velocityY += gravityForce * sandGrain->GetMass() * dt;
 	sandGrain->rect.y += sandGrain->velocityY * dt;
+	CheckCollisions(sandGrain);
+}
+
+void CheckCollisions(std::shared_ptr<SandGrain> sandGrain) {
+	if (sandGrain->rect.y > 585) sandGrain->rect.y = 585;
 }
