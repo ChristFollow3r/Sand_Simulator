@@ -36,19 +36,13 @@ void AssignBlockRects(Block(&grid)[4800]) {
 
 void AtachSandGrain(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 
-	float offset = 10;
-
-	for (int i = 0; i < 4800; i++)
-	{
-		if (sandGrain->rect.x >= grid[i].rect.x && sandGrain->rect.x <= grid[i].rect.x + offset
-			&& sandGrain->rect.y >= grid[i].rect.y && sandGrain->rect.y <= grid[i].rect.y + offset) {
-			sandGrain->rect = grid[i].rect;
-			sandGrain->gridIndex = i;
-			grid[i].isOccupied = true;
-			return;
-		}
-	}
-
+	int row = static_cast<int>(sandGrain->rect.y) / 10;
+	int column = static_cast<int>(sandGrain->rect.x) / 10;
+	int index = (row * 80) + column;
+	
+	sandGrain->rect = grid[index].rect;
+	sandGrain->gridIndex = index;
+	grid[index].isOccupied = true;
 }
 
 void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
