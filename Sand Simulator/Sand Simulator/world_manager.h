@@ -5,8 +5,17 @@
 #include <vector>
 #include "utils.h"
 
+struct Block {
+	SDL_FRect rect;
+	bool isOccupied;
+};
+
 const float gravityForce = 9.8f;
 
+void AssignBlockRects(Block (&grid)[4800]);
+void AtachSandGrain(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain);
+
 float deltaTime(Uint64& lastTick);
-void ApplyGravity(std::shared_ptr<SandGrain> sandGrain, float dt);
-void CheckCollisions(std::shared_ptr<SandGrain> sandGrain);
+
+void ApplyGravity(Block(&grid)[4800], std::shared_ptr<SandGrain> sandGrain);
+

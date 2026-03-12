@@ -35,6 +35,8 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 	
+	Block Grid[4800];
+	AssignBlockRects(Grid);
 	std::vector<std::shared_ptr<SandGrain>> sand;
 
 	while (running) {
@@ -54,10 +56,11 @@ int main(int argc, char *argv[]) {
 					float y;
 					SDL_GetMouseState(&x, &y);
 
-					SDL_FRect rect = { x, y, 15, 15 };
+					SDL_FRect rect = { x, y, 10, 15 };
 					SDL_Color color = { 158, 144, 80, 255 };
 
 					auto sandGrain = std::make_shared<SandGrain>(rect, color, state.renderer);
+					AtachSandGrain(Grid, sandGrain);
 					sand.push_back(sandGrain);
 			}
 		}	
@@ -68,7 +71,7 @@ int main(int argc, char *argv[]) {
 
 		for (auto x : sand) {
 			x->DrawRectangle();
-			ApplyGravity(x, dt);
+			ApplyGravity(Grid, x);
 		}
 		SDL_RenderPresent(state.renderer); 
 	}
