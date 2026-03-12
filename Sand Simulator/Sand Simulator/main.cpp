@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 	
+	float fallingSpeed = 0.01f;
 	Block Grid[4800];
 	AssignBlockRects(Grid);
 	std::vector<std::shared_ptr<SandGrain>> sand;
@@ -71,7 +72,11 @@ int main(int argc, char *argv[]) {
 
 		for (auto x : sand) {
 			x->DrawRectangle();
-			ApplyGravity(Grid, x);
+			x->moverTimer += dt;
+			if (x->moverTimer >= fallingSpeed) {
+				ApplyGravity(Grid, x);
+				x->moverTimer = 0;
+			}
 		}
 		SDL_RenderPresent(state.renderer); 
 	}

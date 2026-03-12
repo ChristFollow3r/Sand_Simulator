@@ -11,7 +11,7 @@ class SandGrain : public Rectangle {
 
 	public:
 
-		float velocityY = 0;
+		float moverTimer = 0;
 		int gridIndex = 0;
 
 		SandGrain(SDL_FRect rect, SDL_Color color, SDL_Renderer *renderer) : Rectangle(rect, color, renderer) {}
