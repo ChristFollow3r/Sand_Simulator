@@ -16,6 +16,7 @@ enum Type {
 struct Block {
 	SDL_FRect rect;
 	Type type;
+	std::shared_ptr<SandGrain> sandGrainPointer;
 };
 
 const float gravityForce = 9.8f;

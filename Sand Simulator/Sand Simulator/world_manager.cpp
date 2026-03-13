@@ -43,6 +43,7 @@ void AtachSandGrain(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 	sandGrain->rect = grid[index].rect;
 	sandGrain->gridIndex = index;
 	grid[index].type = Sand;
+	grid[index].sandGrainPointer = sandGrain;
 }
 
 void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
@@ -57,8 +58,10 @@ void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 
 	if (grid[sandGrain->gridIndex + offset].type == Air) {
 		grid[sandGrain->gridIndex].type = Air;
+		grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
 		sandGrain->rect = grid[sandGrain->gridIndex + offset].rect;
 		grid[sandGrain->gridIndex + offset].type = Sand;
+		grid[sandGrain->gridIndex + offset].sandGrainPointer = sandGrain;
 		sandGrain->gridIndex += offset;
 	}
 
@@ -66,21 +69,26 @@ void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 		if (grid[sandGrain->gridIndex + offset - 1].type == Air && grid[sandGrain->gridIndex + offset + 1].type == Air) {
 			if (random <= 50) {
 				grid[sandGrain->gridIndex].type = Air;
+				grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
 				sandGrain->rect = grid[sandGrain->gridIndex + offset - 1].rect;
 				grid[sandGrain->gridIndex + offset - 1].type = Sand;
+				grid[sandGrain->gridIndex + offset - 1].sandGrainPointer = sandGrain;
 				sandGrain->gridIndex += offset - 1;
 				return;
 			}
 			else if (random > 50) {
 				grid[sandGrain->gridIndex].type = Air;
+				grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
 				sandGrain->rect = grid[sandGrain->gridIndex + offset + 1].rect;
 				grid[sandGrain->gridIndex + offset + 1].type = Sand;
+				grid[sandGrain->gridIndex + offset + 1].sandGrainPointer = sandGrain;
 				sandGrain->gridIndex += offset + 1;
 				return;
 			}
 		}
 		else if (grid[sandGrain->gridIndex + offset - 1].type == Air && !grid[sandGrain->gridIndex + offset + 1].type == Air) {
 			grid[sandGrain->gridIndex].type = Air;
+			grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
 			sandGrain->rect = grid[sandGrain->gridIndex + offset - 1].rect;
 			grid[sandGrain->gridIndex + offset - 1].type = Sand;
 			sandGrain->gridIndex += offset - 1;
@@ -89,6 +97,7 @@ void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 
 		else if (!grid[sandGrain->gridIndex + offset - 1].type == Air && grid[sandGrain->gridIndex + offset + 1].type == Air) {
 			grid[sandGrain->gridIndex].type = Air;
+			grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
 			sandGrain->rect = grid[sandGrain->gridIndex + offset + 1].rect;
 			grid[sandGrain->gridIndex + offset + 1].type = Sand;
 			sandGrain->gridIndex += offset + 1;

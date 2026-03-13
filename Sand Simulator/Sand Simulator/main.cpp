@@ -1,11 +1,12 @@
 #include <SDL3/SDL.h>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 #include <memory>
 #include "utils.h"
 #include "sand_grain.h"
 #include "rectangle.h"
 #include "world_manager.h"
-#include <vector>
 
 void cleanUp(SDL_State& state);
 
@@ -57,7 +58,19 @@ int main(int argc, char *argv[]) {
 		float x;
 		float y;
 
-		if (SDL_GetMouseState(&x,&y) && SDL_BUTTON_LMASK) {
+		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_RMASK) { // I'll add pointers to the Block struct
+
+			int row = static_cast<int>(y) / 10;
+			int column = static_cast<int>(x) / 10;
+			if (column < 0 || column >= 80 || row < 0 || row >= 60) continue;
+			int index = (row * 80) + column;
+			Grid[index].type = Air;
+			auto it = std::find(sand.begin(), sand.end(), Grid[index].sandGrainPointer);
+			if (it != sand.end()) sand.erase(it);
+			Grid[index].sandGrainPointer = nullptr;
+		}
+
+		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_LMASK) {
 
 			SDL_FRect rect = { x, y, 10, 15 };
 			SDL_Color color = { 158, 144, 80, 255 };
@@ -66,6 +79,7 @@ int main(int argc, char *argv[]) {
 			AtachSandGrain(Grid, sandGrain);
 			sand.push_back(sandGrain);
 		}
+
 			
 		SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
 		SDL_RenderClear(state.renderer);
