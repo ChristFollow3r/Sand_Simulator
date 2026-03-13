@@ -18,6 +18,8 @@ int main(int argc, char *argv[]) {
 	deltaTime(lastTick);
 	bool running = true;
 
+	SDL_Color gradientColor = { 0, 0, 0, 255 }; // Gay color
+
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", "Unable to initialize SDL Video", nullptr);
 		return 1;
@@ -62,14 +64,26 @@ int main(int argc, char *argv[]) {
 			x = std::clamp(x, 0.0f, (float)(width - 1));
 			y = std::clamp(y, 0.0f, (float)(height - 1));
 
+			int r1 = rand() % 256;
+			int r2 = rand() % 256;
+			int r3 = rand() % 256;
+			int r4 = rand() % 256;
+
+			SDL_Color xdColor = { r1, r2, r3, r4};
+
 			SDL_FRect rect = { x, y, 10, 15 };
 			SDL_Color Colors[5] = { { 194, 178, 128, 255 }, { 210, 180, 140, 255 }, { 180, 160, 100, 255 }, { 230, 210, 160, 255 }, { 158, 144, 80, 255 } };
 
 			for (int i = -1; i < 2; i++)
 			{
 				if (rect.x < 0.0f || rect.x > (float)(width - 1)) continue;
+
+				gradientColor.r += 1;
+				gradientColor.g += 1;
+				gradientColor.b += 1;
+				
 				int random = rand() % 5;
-				auto sandGrain = std::make_shared<SandGrain>(rect, Colors[random], state.renderer);
+				auto sandGrain = std::make_shared<SandGrain>(rect, gradientColor, state.renderer);
 				AtachSandGrain(Grid, sandGrain);
 				sand.push_back(sandGrain);
 				rect.x += 10 * i;
