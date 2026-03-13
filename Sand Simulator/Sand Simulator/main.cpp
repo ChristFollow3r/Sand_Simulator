@@ -73,9 +73,9 @@ int main(int argc, char *argv[]) {
 
 			SDL_Color Colors[5] = { { 194, 178, 128, 255 }, { 210, 180, 140, 255 }, { 180, 160, 100, 255 }, { 230, 210, 160, 255 }, { 158, 144, 80, 255 } };
 
-			for (int i = -1; i < 2; i++)
+			for (int i = -1; i < 1; i++)
 			{
-				for (int j = -1; j < 2; j++) {
+				for (int j = -1; j < 1; j++) {
 
 					//if (rect.x < 0.0f || rect.x >(float)(width - 1)) continue;
 					//if (rect.y < 0.0f || rect.y >(float)(height - 1)) continue;
