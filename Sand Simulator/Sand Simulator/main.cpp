@@ -60,21 +60,28 @@ int main(int argc, char *argv[]) {
 
 		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_LMASK) {
 
+			x = std::clamp(x, 0.0f, 799.0f);
+			y = std::clamp(y, 0.0f, 599.0f);
+
 			SDL_FRect rect = { x, y, 10, 15 };
 			SDL_Color Colors[5] = { { 194, 178, 128, 255 }, { 210, 180, 140, 255 }, { 180, 160, 100, 255 }, { 230, 210, 160, 255 }, { 158, 144, 80, 255 } };
 
 			for (int i = -1; i < 2; i++)
 			{
-				rect.y += 10 * i;
-
+				if (rect.x < 0.0f || rect.x > 799.0f) continue;
 				int random = rand() % 5;
 				auto sandGrain = std::make_shared<SandGrain>(rect, Colors[random], state.renderer);
 				AtachSandGrain(Grid, sandGrain);
 				sand.push_back(sandGrain);
+				rect.x += 10 * i;
+
 			}
 		}
 
-		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_RMASK) { // I'll add pointers to the Block struct
+		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_RMASK) {
+
+			x = std::clamp(x, 0.0f, 799.0f);
+			y = std::clamp(y, 0.0f, 599.0f);
 
 			int row = static_cast<int>(y) / 10;
 			int column = static_cast<int>(x) / 10;

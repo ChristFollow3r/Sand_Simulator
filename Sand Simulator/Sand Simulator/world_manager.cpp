@@ -50,6 +50,7 @@ void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 
 	int offset = 80;
 	int random = rand() % 101;
+	//int boundry = sandGrain->gridIndex % 80;
 
 	if (sandGrain == nullptr) return;
 
@@ -69,7 +70,7 @@ void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 	}
 
 	else if (grid[sandGrain->gridIndex + offset].type == Sand) {
-		if (sandGrain->gridIndex % 80 > 0 && grid[sandGrain->gridIndex + offset - 1].type == Air && grid[sandGrain->gridIndex + offset + 1].type == Air) {
+		if (grid[sandGrain->gridIndex + offset - 1].type == Air && grid[sandGrain->gridIndex + offset + 1].type == Air) {
 			if (random <= 50) {
 				grid[sandGrain->gridIndex].type = Air;
 				grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
