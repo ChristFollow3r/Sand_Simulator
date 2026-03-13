@@ -37,7 +37,6 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 	
-	float fallingSpeed = 0.01f;
 	Block Grid[gridSize];
 	AssignBlockRects(Grid); // Innecessary but it's not a big deal. 
 	std::vector<std::shared_ptr<SandGrain>> sand;
@@ -113,7 +112,7 @@ int main(int argc, char *argv[]) {
 		for (auto x : sand) {
 			x->DrawRectangle();
 			x->moverTimer += dt;
-			if (x->moverTimer >= fallingSpeed) {
+			if (x->moverTimer >= sandFallingSpeed) {
 				ApplyGravity(Grid, x);
 				x->moverTimer = 0;
 			}
