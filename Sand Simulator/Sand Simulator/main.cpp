@@ -60,6 +60,7 @@ int main(int argc, char *argv[]) {
 
 		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_LMASK) {
 
+			//if (x < 0.0 || x >= 799.0 || y < 0.0 || y >= 599.0) continue;
 			int random = rand() % 5;
 			SDL_FRect rect = { x, y, 10, 15 };
 			SDL_Color Colors[5] = { { 194, 178, 128, 255 }, { 210, 180, 140, 255 }, { 180, 160, 100, 255 }, { 230, 210, 160, 255 }, { 158, 144, 80, 255 } };
@@ -73,15 +74,17 @@ int main(int argc, char *argv[]) {
 
 			int row = static_cast<int>(y) / 10;
 			int column = static_cast<int>(x) / 10;
-			if (column < 0 || column >= 80 || row < 0 || row >= 60) continue;
 
-			for (int i = -1; i < 2; i++)
+			for (int i = -3; i < 4; i++)
 			{
-				for (int j = -1; j < 2; j++)
+				for (int j = -3; j < 4; j++)
 				{
 					int tempRow = row + i;
 					int tempColumn = column + j;
 					int index = (tempRow * 80) + tempColumn;
+
+					if (tempRow < 0 || tempRow >= 60 || tempColumn < 0 || tempColumn >= 80) continue;
+
 					Grid[index].type = Air;
 					auto it = std::find(sand.begin(), sand.end(), Grid[index].sandGrainPointer);
 					if (it != sand.end()) sand.erase(it);

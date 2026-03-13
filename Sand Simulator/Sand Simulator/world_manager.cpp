@@ -55,6 +55,7 @@ void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 
 	if (sandGrain->gridIndex + offset >= 4800) { // Might have to come here later cause if I add various types and ground can't just be sand.
 		grid[sandGrain->gridIndex].type = Sand;
+		grid[sandGrain->gridIndex].sandGrainPointer = sandGrain;
 		return;
 	}
 
