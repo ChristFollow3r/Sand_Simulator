@@ -7,6 +7,7 @@
 #include "sand_grain.h"
 #include "rectangle.h"
 #include "world_manager.h"
+#include "utils.h"
 
 void cleanUp(SDL_State& state);
 
@@ -18,19 +19,16 @@ int main(int argc, char *argv[]) {
 	deltaTime(lastTick);
 	bool running = true;
 
-	if (!SDL_Init(SDL_INIT_VIDEO)) {
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", "Unable to initialize SDL Video", nullptr);
-		return 1;
-	}
+	_InitSDLVideo();
 
-	state.window = SDL_CreateWindow("Sand Simulator", width, height, 0);
+	state.window = SDL_CreateWindow("Sand Simulator", width, height, 0); // Also make this a function
 	if (!state.window) {
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", "Unable to initialize SDL Window", nullptr);
 		cleanUp(state);
 		return 1;
 	}
 
-	state.renderer = SDL_CreateRenderer(state.window, nullptr);
+	state.renderer = SDL_CreateRenderer(state.window, nullptr); // Make this a function
 	if (!state.renderer) {
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", "Unable to create the SDL Renderer", nullptr);
 		cleanUp(state);

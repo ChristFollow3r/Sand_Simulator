@@ -16,3 +16,5 @@ struct SDL_State {
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 };
+
+void _InitSDLVideo();
