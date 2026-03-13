@@ -71,23 +71,29 @@ int main(int argc, char *argv[]) {
 
 			SDL_Color xdColor = { r1, r2, r3, r4};
 
-			SDL_FRect rect = { x, y, 10, 15 };
 			SDL_Color Colors[5] = { { 194, 178, 128, 255 }, { 210, 180, 140, 255 }, { 180, 160, 100, 255 }, { 230, 210, 160, 255 }, { 158, 144, 80, 255 } };
 
 			for (int i = -1; i < 2; i++)
 			{
-				if (rect.x < 0.0f || rect.x > (float)(width - 1)) continue;
+				for (int j = -1; j < 2; j++) {
 
-				gradientColor.r += 1;
-				gradientColor.g += 1;
-				gradientColor.b += 1;
-				
-				int random = rand() % 5;
-				auto sandGrain = std::make_shared<SandGrain>(rect, gradientColor, state.renderer);
-				AtachSandGrain(Grid, sandGrain);
-				sand.push_back(sandGrain);
-				rect.x += 10 * i;
+					//if (rect.x < 0.0f || rect.x >(float)(width - 1)) continue;
+					//if (rect.y < 0.0f || rect.y >(float)(height - 1)) continue;
 
+					float spawnX = x + i * 10.0f;
+					float spawnY = y + j * 10.0f;
+					if (spawnX < 0.0f || spawnX >= width || spawnY < 0.0f || spawnY >= height) continue;
+
+					gradientColor.r += 1;
+					gradientColor.g += 1;
+					gradientColor.b += 1;
+					SDL_FRect rect = { spawnX, spawnY, 10, 15 };
+					//int random = rand() % 5;
+					auto sandGrain = std::make_shared<SandGrain>(rect, gradientColor, state.renderer);
+					AtachSandGrain(Grid, sandGrain);
+					sand.push_back(sandGrain);
+
+				}
 			}
 		}
 
