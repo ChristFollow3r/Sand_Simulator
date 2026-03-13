@@ -74,11 +74,20 @@ int main(int argc, char *argv[]) {
 			int row = static_cast<int>(y) / 10;
 			int column = static_cast<int>(x) / 10;
 			if (column < 0 || column >= 80 || row < 0 || row >= 60) continue;
-			int index = (row * 80) + column;
-			Grid[index].type = Air;
-			auto it = std::find(sand.begin(), sand.end(), Grid[index].sandGrainPointer);
-			if (it != sand.end()) sand.erase(it);
-			Grid[index].sandGrainPointer = nullptr;
+
+			for (int i = -1; i < 2; i++)
+			{
+				for (int j = -1; j < 2; j++)
+				{
+					int tempRow = row + i;
+					int tempColumn = column + j;
+					int index = (tempRow * 80) + tempColumn;
+					Grid[index].type = Air;
+					auto it = std::find(sand.begin(), sand.end(), Grid[index].sandGrainPointer);
+					if (it != sand.end()) sand.erase(it);
+					Grid[index].sandGrainPointer = nullptr;
+				}
+			}
 		}
 
 
