@@ -29,4 +29,4 @@ void _EraseSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGra
 void _AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain);
 void _ApplyGravity(Block(&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain);
 
-
+void _Update(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, float dt);

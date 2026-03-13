@@ -171,3 +171,14 @@ void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain
 	}
 	
 }
+
+void _Update(Block (&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, float dt) {
+	for (auto x : sand) {
+		x->DrawRectangle();
+		x->moverTimer += dt;
+		if (x->moverTimer >= sandFallingSpeed) {
+			_ApplyGravity(grid, x);
+			x->moverTimer = 0;
+		}
+	}
+}
