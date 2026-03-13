@@ -51,21 +51,21 @@ int main(int argc, char *argv[]) {
 				case (SDL_EVENT_QUIT):
 					running = false;
 					break;
-
-				case (SDL_EVENT_MOUSE_BUTTON_DOWN):
-
-					float x;
-					float y;
-					SDL_GetMouseState(&x, &y);
-
-					SDL_FRect rect = { x, y, 10, 15 };
-					SDL_Color color = { 158, 144, 80, 255 };
-
-					auto sandGrain = std::make_shared<SandGrain>(rect, color, state.renderer);
-					AtachSandGrain(Grid, sandGrain);
-					sand.push_back(sandGrain);
 			}
-		}	
+		}
+
+		float x;
+		float y;
+
+		if (SDL_GetMouseState(&x,&y) && SDL_BUTTON_LMASK) {
+
+			SDL_FRect rect = { x, y, 10, 15 };
+			SDL_Color color = { 158, 144, 80, 255 };
+
+			auto sandGrain = std::make_shared<SandGrain>(rect, color, state.renderer);
+			AtachSandGrain(Grid, sandGrain);
+			sand.push_back(sandGrain);
+		}
 			
 		SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
 		SDL_RenderClear(state.renderer);
