@@ -58,34 +58,7 @@ int main(int argc, char *argv[]) {
 		float y;
 
 		_CreateSandGrain(Grid, sand, state);
-
-		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_RMASK) {
-
-			x = std::clamp(x, 0.0f, (float)(width - 1));
-			y = std::clamp(y, 0.0f, (float)(height - 1));
-
-			int row = static_cast<int>(y) / 10;
-			int column = static_cast<int>(x) / 10;
-
-			for (int i = -3; i < 4; i++)
-			{
-				for (int j = -3; j < 4; j++)
-				{
-					int tempRow = row + i;
-					int tempColumn = column + j;
-					int index = (tempRow * cols) + tempColumn;
-
-					if (tempRow < 0 || tempRow >= rows || tempColumn < 0 || tempColumn >= cols) continue;
-
-					Grid[index].type = Air;
-					auto it = std::find(sand.begin(), sand.end(), Grid[index].sandGrainPointer);
-					if (it != sand.end()) sand.erase(it);
-					Grid[index].sandGrainPointer = nullptr;
-				}
-			}
-		}
-
-
+		_EraseSandGrain(Grid, sand, state);
 			
 		SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
 		SDL_RenderClear(state.renderer);

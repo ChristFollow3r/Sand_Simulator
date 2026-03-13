@@ -18,7 +18,6 @@ void _AssignBlockRects(Block(&grid)[gridSize]) {
 	float height = 10;
 	float width = 10;
 
-
 	for (int i = 0; i < rows; i++)
 	{
 		for (int j = 0; j < cols; j++)
@@ -60,6 +59,38 @@ void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGr
 				_AtachSandGrain(grid, sandGrain);
 				sand.push_back(sandGrain);
 
+			}
+		}
+	}
+}
+
+void _EraseSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, SDL_State state) {
+
+	float x;
+	float y;
+
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_RMASK) {
+
+		x = std::clamp(x, 0.0f, (float)(width - 1));
+		y = std::clamp(y, 0.0f, (float)(height - 1));
+
+		int row = static_cast<int>(y) / 10;
+		int column = static_cast<int>(x) / 10;
+
+		for (int i = -3; i < 4; i++)
+		{
+			for (int j = -3; j < 4; j++)
+			{
+				int tempRow = row + i;
+				int tempColumn = column + j;
+				int index = (tempRow * cols) + tempColumn;
+
+				if (tempRow < 0 || tempRow >= rows || tempColumn < 0 || tempColumn >= cols) continue;
+
+				grid[index].type = Air;
+				auto it = std::find(sand.begin(), sand.end(), grid[index].sandGrainPointer);
+				if (it != sand.end()) sand.erase(it);
+				grid[index].sandGrainPointer = nullptr;
 			}
 		}
 	}
