@@ -21,10 +21,11 @@ struct Block {
 
 const float gravityForce = 9.8f;
 
-void AssignBlockRects(Block (&grid)[4800]);
-void AtachSandGrain(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain);
-
 float deltaTime(Uint64& lastTick);
 
-void ApplyGravity(Block(&grid)[4800], std::shared_ptr<SandGrain> sandGrain);
+void AssignBlockRects(Block (&grid)[gridSize]);
+void AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain);
+void ApplyGravity(Block(&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain);
+
+
 

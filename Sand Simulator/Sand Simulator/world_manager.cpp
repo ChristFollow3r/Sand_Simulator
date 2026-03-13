@@ -9,23 +9,21 @@ float deltaTime(Uint64& lastTick) {
 	return static_cast<float>(elapsedTick / 1000.0);
 }
 
-void AssignBlockRects(Block(&grid)[4800]) {
+void AssignBlockRects(Block(&grid)[gridSize]) {
 
 	float x = 0;
 	float y = 0;
 	float height = 10;
 	float width = 10;
 
-	int rowOffset = 60;
-	int offset = 80;
 
-	for (int i = 0; i < rowOffset; i++)
+	for (int i = 0; i < rows; i++)
 	{
-		for (int j = 0; j < offset; j++)
+		for (int j = 0; j < cols; j++)
 		{
 			SDL_FRect newRect = { x, y, height, width };
-			grid[i * offset + j].rect = newRect;
-			grid[i * offset + j].type = Air;
+			grid[i * cols + j].rect = newRect;
+			grid[i * cols + j].type = Air;
 			x += 10;
 		}
 		x = 0;
@@ -34,11 +32,11 @@ void AssignBlockRects(Block(&grid)[4800]) {
 
 }
 
-void AtachSandGrain(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
+void AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain) {
 
 	int row = static_cast<int>(sandGrain->rect.y) / 10;
 	int column = static_cast<int>(sandGrain->rect.x) / 10;
-	int index = (row * 80) + column;
+	int index = (row * cols) + column;
 	
 	sandGrain->rect = grid[index].rect;
 	sandGrain->gridIndex = index;
@@ -46,15 +44,15 @@ void AtachSandGrain(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 	grid[index].sandGrainPointer = sandGrain;
 }
 
-void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
+void ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain) {
 
-	int offset = 80;
+	int offset = 192;
 	int random = rand() % 101;
 	//int boundry = sandGrain->gridIndex % 80;
 
 	if (sandGrain == nullptr) return;
 
-	if (sandGrain->gridIndex + offset >= 4800) { // Might have to come here later cause if I add various types and ground can't just be sand.
+	if (sandGrain->gridIndex + offset >= gridSize) { // Might have to come here later cause if I add various types and ground can't just be sand.
 		grid[sandGrain->gridIndex].type = Sand;
 		grid[sandGrain->gridIndex].sandGrainPointer = sandGrain;
 		return;

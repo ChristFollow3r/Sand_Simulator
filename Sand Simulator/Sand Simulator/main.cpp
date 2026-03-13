@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	}
 	
 	float fallingSpeed = 0.01f;
-	Block Grid[4800];
+	Block Grid[gridSize];
 	AssignBlockRects(Grid); // Innecessary but it's not a big deal. 
 	std::vector<std::shared_ptr<SandGrain>> sand;
 
@@ -60,15 +60,15 @@ int main(int argc, char *argv[]) {
 
 		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_LMASK) {
 
-			x = std::clamp(x, 0.0f, 799.0f);
-			y = std::clamp(y, 0.0f, 599.0f);
+			x = std::clamp(x, 0.0f, (float)(width - 1));
+			y = std::clamp(y, 0.0f, (float)(height - 1));
 
 			SDL_FRect rect = { x, y, 10, 15 };
 			SDL_Color Colors[5] = { { 194, 178, 128, 255 }, { 210, 180, 140, 255 }, { 180, 160, 100, 255 }, { 230, 210, 160, 255 }, { 158, 144, 80, 255 } };
 
 			for (int i = -1; i < 2; i++)
 			{
-				if (rect.x < 0.0f || rect.x > 799.0f) continue;
+				if (rect.x < 0.0f || rect.x > (float)(width - 1)) continue;
 				int random = rand() % 5;
 				auto sandGrain = std::make_shared<SandGrain>(rect, Colors[random], state.renderer);
 				AtachSandGrain(Grid, sandGrain);
@@ -80,8 +80,8 @@ int main(int argc, char *argv[]) {
 
 		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_RMASK) {
 
-			x = std::clamp(x, 0.0f, 799.0f);
-			y = std::clamp(y, 0.0f, 599.0f);
+			x = std::clamp(x, 0.0f, (float)(width - 1));
+			y = std::clamp(y, 0.0f, (float)(height - 1));
 
 			int row = static_cast<int>(y) / 10;
 			int column = static_cast<int>(x) / 10;
@@ -92,9 +92,9 @@ int main(int argc, char *argv[]) {
 				{
 					int tempRow = row + i;
 					int tempColumn = column + j;
-					int index = (tempRow * 80) + tempColumn;
+					int index = (tempRow * cols) + tempColumn;
 
-					if (tempRow < 0 || tempRow >= 60 || tempColumn < 0 || tempColumn >= 80) continue;
+					if (tempRow < 0 || tempRow >= rows || tempColumn < 0 || tempColumn >= cols) continue;
 
 					Grid[index].type = Air;
 					auto it = std::find(sand.begin(), sand.end(), Grid[index].sandGrainPointer);
