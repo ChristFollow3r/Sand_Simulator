@@ -23,9 +23,9 @@ const float gravityForce = 9.8f;
 
 float deltaTime(Uint64& lastTick);
 
-void AssignBlockRects(Block (&grid)[gridSize]);
-void AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain);
-void ApplyGravity(Block(&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain);
-
+void _AssignBlockRects(Block (&grid)[gridSize]);
+void _AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain);
+void _ApplyGravity(Block(&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain);
+void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, SDL_State state);
 
 

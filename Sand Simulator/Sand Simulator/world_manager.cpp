@@ -1,4 +1,6 @@
 #include "world_manager.h"
+#include <algorithm>
+#include <vector>
 
 float deltaTime(Uint64& lastTick) {
 
@@ -9,7 +11,7 @@ float deltaTime(Uint64& lastTick) {
 	return static_cast<float>(elapsedTick / 1000.0);
 }
 
-void AssignBlockRects(Block(&grid)[gridSize]) {
+void _AssignBlockRects(Block(&grid)[gridSize]) {
 
 	float x = 0;
 	float y = 0;
@@ -32,7 +34,38 @@ void AssignBlockRects(Block(&grid)[gridSize]) {
 
 }
 
-void AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain) {
+void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, SDL_State state) {
+
+	float x;
+	float y;
+
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON_LMASK) {
+
+		x = std::clamp(x, 0.0f, (float)(width - 1));
+		y = std::clamp(y, 0.0f, (float)(height - 1));
+
+		SDL_Color Colors[5] = { { 194, 178, 128, 255 }, { 210, 180, 140, 255 }, { 180, 160, 100, 255 }, { 230, 210, 160, 255 }, { 158, 144, 80, 255 } };
+
+		for (int i = -1; i < 1; i++)
+		{
+			for (int j = -1; j < 1; j++) {
+
+				float spawnX = x + i * 10.0f;
+				float spawnY = y + j * 10.0f;
+				if (spawnX < 0.0f || spawnX >= width || spawnY < 0.0f || spawnY >= height) continue;
+
+				SDL_FRect rect = { spawnX, spawnY, 10, 15 };
+				int random = rand() % 5;
+				auto sandGrain = std::make_shared<SandGrain>(rect, Colors[random], state.renderer);
+				_AtachSandGrain(grid, sandGrain);
+				sand.push_back(sandGrain);
+
+			}
+		}
+	}
+}
+
+void _AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain) {
 
 	int row = static_cast<int>(sandGrain->rect.y) / 10;
 	int column = static_cast<int>(sandGrain->rect.x) / 10;
@@ -44,7 +77,7 @@ void AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrai
 	grid[index].sandGrainPointer = sandGrain;
 }
 
-void ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain) {
+void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain) {
 
 	int random = rand() % 101;
 	//int boundry = sandGrain->gridIndex % 80;
