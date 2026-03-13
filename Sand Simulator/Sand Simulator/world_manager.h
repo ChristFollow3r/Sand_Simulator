@@ -5,9 +5,17 @@
 #include <vector>
 #include "utils.h"
 
+enum Type {
+	Air,
+	Sand,
+	Water,
+	Stone,
+	Fire
+};
+
 struct Block {
 	SDL_FRect rect;
-	bool isOccupied;
+	Type type;
 };
 
 const float gravityForce = 9.8f;

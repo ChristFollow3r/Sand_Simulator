@@ -25,7 +25,7 @@ void AssignBlockRects(Block(&grid)[4800]) {
 		{
 			SDL_FRect newRect = { x, y, height, width };
 			grid[i * offset + j].rect = newRect;
-			grid[i * offset + j].isOccupied = false;
+			grid[i * offset + j].type = Air;
 			x += 10;
 		}
 		x = 0;
@@ -42,7 +42,7 @@ void AtachSandGrain(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 	
 	sandGrain->rect = grid[index].rect;
 	sandGrain->gridIndex = index;
-	grid[index].isOccupied = true;
+	grid[index].type = Sand;
 }
 
 void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
@@ -50,14 +50,14 @@ void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 	int offset = 80;
 	
 	if (sandGrain->gridIndex + offset >= 4800) {
-		grid[sandGrain->gridIndex].isOccupied = true;
+		grid[sandGrain->gridIndex].type = Sand;
 		return;
 	}
-	else if (grid[sandGrain->gridIndex + offset].isOccupied) return;
+	else if (grid[sandGrain->gridIndex + offset].type == Sand) return;
 	else {
-		grid[sandGrain->gridIndex].isOccupied = false;
+		grid[sandGrain->gridIndex].type = Air;
 		sandGrain->rect = grid[sandGrain->gridIndex + offset].rect;
-		grid[sandGrain->gridIndex + offset].isOccupied = true;
+		grid[sandGrain->gridIndex + offset].type = Sand;
 		sandGrain->gridIndex += offset;
 	}
 }

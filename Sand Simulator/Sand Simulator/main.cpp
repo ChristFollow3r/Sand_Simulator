@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 	
 	float fallingSpeed = 0.01f;
 	Block Grid[4800];
-	AssignBlockRects(Grid);
+	AssignBlockRects(Grid); // Innecessary but it's not a big deal. 
 	std::vector<std::shared_ptr<SandGrain>> sand;
 
 	while (running) {
