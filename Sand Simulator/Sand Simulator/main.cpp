@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	}
 	
 	Block Grid[gridSize];
-	_AssignBlockRects(Grid); // Innecessary but it's not a big deal. 
+	_AssignBlockRects(Grid); // I waste memory creating over 20 thousand innecessary rects.
 	std::vector<std::shared_ptr<SandGrain>> sand;
 
 	while (running) {
@@ -54,17 +54,15 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		float x;
-		float y;
+		float dt = deltaTime(lastTick);
 
 		_CreateSandGrain(Grid, sand, state);
 		_EraseSandGrain(Grid, sand, state);
 			
 		SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
 		SDL_RenderClear(state.renderer);
-		float dt = deltaTime(lastTick);
 
-		for (auto x : sand) {
+		for (auto x : sand) { // Draws the materials and applies gravity on them
 			x->DrawRectangle();
 			x->moverTimer += dt;
 			if (x->moverTimer >= sandFallingSpeed) {
@@ -72,6 +70,7 @@ int main(int argc, char *argv[]) {
 				x->moverTimer = 0;
 			}
 		}
+
 		SDL_RenderPresent(state.renderer); 
 	}
 
