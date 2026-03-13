@@ -48,16 +48,52 @@ void AtachSandGrain(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 void ApplyGravity(Block (&grid)[4800], std::shared_ptr<SandGrain> sandGrain) {
 
 	int offset = 80;
-	
-	if (sandGrain->gridIndex + offset >= 4800) {
+	int random = rand() % 101;
+
+	if (sandGrain->gridIndex + offset >= 4800) { // Might have to come here later cause if I add various types and ground can't just be sand.
 		grid[sandGrain->gridIndex].type = Sand;
 		return;
 	}
-	else if (grid[sandGrain->gridIndex + offset].type == Sand) return;
-	else {
+
+	if (grid[sandGrain->gridIndex + offset].type == Air) {
 		grid[sandGrain->gridIndex].type = Air;
 		sandGrain->rect = grid[sandGrain->gridIndex + offset].rect;
 		grid[sandGrain->gridIndex + offset].type = Sand;
 		sandGrain->gridIndex += offset;
 	}
+
+	else if (grid[sandGrain->gridIndex + offset].type == Sand) {
+		if (grid[sandGrain->gridIndex + offset - 1].type == Air && grid[sandGrain->gridIndex + offset + 1].type == Air) {
+			if (random <= 50) {
+				grid[sandGrain->gridIndex].type = Air;
+				sandGrain->rect = grid[sandGrain->gridIndex + offset - 1].rect;
+				grid[sandGrain->gridIndex + offset - 1].type = Sand;
+				sandGrain->gridIndex += offset - 1;
+				return;
+			}
+			else if (random > 50) {
+				grid[sandGrain->gridIndex].type = Air;
+				sandGrain->rect = grid[sandGrain->gridIndex + offset + 1].rect;
+				grid[sandGrain->gridIndex + offset + 1].type = Sand;
+				sandGrain->gridIndex += offset + 1;
+				return;
+			}
+		}
+		else if (grid[sandGrain->gridIndex + offset - 1].type == Air && !grid[sandGrain->gridIndex + offset + 1].type == Air) {
+			grid[sandGrain->gridIndex].type = Air;
+			sandGrain->rect = grid[sandGrain->gridIndex + offset - 1].rect;
+			grid[sandGrain->gridIndex + offset - 1].type = Sand;
+			sandGrain->gridIndex += offset - 1;
+			return;
+		}
+
+		else if (!grid[sandGrain->gridIndex + offset - 1].type == Air && grid[sandGrain->gridIndex + offset + 1].type == Air) {
+			grid[sandGrain->gridIndex].type = Air;
+			sandGrain->rect = grid[sandGrain->gridIndex + offset + 1].rect;
+			grid[sandGrain->gridIndex + offset + 1].type = Sand;
+			sandGrain->gridIndex += offset + 1;
+			return;
+		}
+	}
+	
 }

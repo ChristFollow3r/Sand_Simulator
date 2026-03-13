@@ -11,6 +11,7 @@ void cleanUp(SDL_State& state);
 
 int main(int argc, char *argv[]) {
 
+	srand(time(NULL));
 	SDL_State state;
 	Uint64 lastTick = SDL_GetTicks();
 	deltaTime(lastTick);
