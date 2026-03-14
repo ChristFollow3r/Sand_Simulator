@@ -172,6 +172,13 @@ void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain
 	
 }
 
+void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, float dt) {
+	SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
+	SDL_RenderClear(state.renderer);
+	_Update(grid, sand, dt);
+	SDL_RenderPresent(state.renderer);
+}
+
 void _Update(Block (&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, float dt) {
 	for (auto x : sand) {
 		x->DrawRectangle();
