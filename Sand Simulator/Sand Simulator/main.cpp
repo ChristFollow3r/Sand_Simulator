@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	Uint64 lastTick = SDL_GetTicks();
 	deltaTime(lastTick);
 
-	std::vector<std::shared_ptr<SandGrain>> sand;
+	std::vector<std::shared_ptr<Material>> sand;
 	Block Grid[gridSize];
 	_AssignBlockRects(Grid); 
 
@@ -39,12 +39,7 @@ int main(int argc, char *argv[]) {
 
 		float dt = deltaTime(lastTick);
 
-		static float fpsTimer = 0;
-		fpsTimer += dt;
-		if (fpsTimer >= 1.0f) {
-			std::cout << "FPS: " << (int)(1.0f / dt) << std::endl;
-			fpsTimer = 0;
-		}
+		_DisplayFPS(dt);
 
 		_CreateSandGrain(Grid, sand, state);
 		_EraseSandGrain(Grid, sand, state);

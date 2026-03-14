@@ -31,3 +31,12 @@ void _CleanUp(SDL_State& state) {
 	SDL_DestroyWindow(state.window);
 	SDL_Quit();
 }
+
+void _DisplayFPS(float dt) {
+	static float fpsTimer = 0;
+	fpsTimer += dt;
+	if (fpsTimer >= 1.0f) {
+		std::cout << "FPS: " << (int)(1.0f / dt) << std::endl;
+		fpsTimer = 0;
+	}
+} // It displays it in the console though

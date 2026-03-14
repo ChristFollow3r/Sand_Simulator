@@ -33,7 +33,7 @@ void _AssignBlockRects(Block(&grid)[gridSize]) {
 
 }
 
-void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, SDL_State state) {
+void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, SDL_State state) {
 
 	float x;
 	float y;
@@ -55,7 +55,7 @@ void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGr
 
 				SDL_FRect rect = { spawnX, spawnY, 10, 15 };
 				int random = rand() % 5;
-				auto sandGrain = std::make_shared<SandGrain>(rect, Colors[random], state.renderer);
+				auto sandGrain = std::make_shared<Material>(rect, Colors[random], state.renderer);
 				_AtachSandGrain(grid, sandGrain);
 				sand.push_back(sandGrain);
 
@@ -64,7 +64,7 @@ void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGr
 	}
 }
 
-void _EraseSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, SDL_State state) {
+void _EraseSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, SDL_State state) {
 
 	float x;
 	float y;
@@ -96,7 +96,7 @@ void _EraseSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGra
 	}
 }
 
-void _AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain) {
+void _AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<Material> sandGrain) {
 
 	int row = static_cast<int>(sandGrain->rect.y) / 10;
 	int column = static_cast<int>(sandGrain->rect.x) / 10;
@@ -108,7 +108,7 @@ void _AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGra
 	grid[index].sandGrainPointer = sandGrain;
 }
 
-void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain) {
+void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<Material> sandGrain) {
 
 	int random = rand() % 101;
 	//int boundry = sandGrain->gridIndex % 80;
@@ -172,14 +172,14 @@ void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<SandGrain> sandGrain
 	
 }
 
-void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, float dt) {
+void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, float dt) {
 	SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
 	SDL_RenderClear(state.renderer);
 	_Update(grid, sand, dt);
 	SDL_RenderPresent(state.renderer);
 }
 
-void _Update(Block (&grid)[gridSize], std::vector<std::shared_ptr<SandGrain>>& sand, float dt) {
+void _Update(Block (&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, float dt) {
 	for (auto x : sand) {
 		x->DrawRectangle();
 		x->moverTimer += dt;

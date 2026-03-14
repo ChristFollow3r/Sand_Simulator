@@ -7,18 +7,12 @@
 /// <summary>
 /// A sand garin. Takes: Rectangle::(rect, color, *renderer)
 /// </summary>
-class SandGrain : public Rectangle {
+class Material : public Rectangle {
 
 	public:
 
 		float moverTimer = 0;
 		int gridIndex = 0;
+		Material(SDL_FRect rect, SDL_Color color, SDL_Renderer *renderer) : Rectangle(rect, color, renderer) {}
 
-		SandGrain(SDL_FRect rect, SDL_Color color, SDL_Renderer *renderer) : Rectangle(rect, color, renderer) {}
-
-		float GetMass() { return this->mass; };
-
-	private:
-
-		const float mass = 20;
 };
