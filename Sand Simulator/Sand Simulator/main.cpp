@@ -7,19 +7,18 @@
 #include "sand_grain.h"
 #include "rectangle.h"
 #include "world_manager.h"
-#include "utils.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {	
 
 	SDL_State state;
-	bool running = true;
+
 	srand(time(NULL));
-
-	Uint64 lastTick = SDL_GetTicks();
-	deltaTime(lastTick);
-
 	_InitSDLVideo();
 	_InitWindowRenderer(state);
+
+	bool running = true;
+	Uint64 lastTick = SDL_GetTicks();
+	deltaTime(lastTick);
 
 	std::vector<std::shared_ptr<SandGrain>> sand;
 	Block Grid[gridSize];
