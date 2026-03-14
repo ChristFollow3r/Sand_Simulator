@@ -1,4 +1,5 @@
 #include "world_manager.h"
+#include "sandGrain.h"
 #include <algorithm>
 #include <vector>
 
@@ -33,7 +34,7 @@ void _AssignBlockRects(Block(&grid)[gridSize]) {
 
 }
 
-void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state) {
+void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state) {
 
 	float x;
 	float y;
@@ -42,8 +43,6 @@ void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materi
 
 		x = std::clamp(x, 0.0f, (float)(width - 1));
 		y = std::clamp(y, 0.0f, (float)(height - 1));
-
-		SDL_Color Colors[5] = { { 194, 178, 128, 255 }, { 210, 180, 140, 255 }, { 180, 160, 100, 255 }, { 230, 210, 160, 255 }, { 158, 144, 80, 255 } };
 
 		for (int i = -1; i < 1; i++)
 		{
@@ -55,7 +54,7 @@ void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materi
 
 				SDL_FRect rect = { spawnX, spawnY, 10, 15 };
 				int random = rand() % 5;
-				auto sandGrain = std::make_shared<Material>(rect, Colors[random], state.renderer);
+				auto sandGrain = std::make_shared<SandGrain>(rect, state.renderer);
 				_AtachMaterial(grid, sandGrain);
 				materials.push_back(sandGrain);
 
@@ -108,70 +107,6 @@ void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material)
 	grid[index].materialPointer = material;
 }
 
-void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<Material> material) {
-
-	int random = rand() % 101;
-	//int boundry = sandGrain->gridIndex % 80;
-
-	if (material == nullptr) return;
-
-	if (material->gridIndex + cols >= gridSize) { // Might have to come here later cause if I add various types and ground can't just be sand.
-		grid[material->gridIndex].type = Sand;
-		grid[material->gridIndex].materialPointer = material;
-		return;
-	}
-
-	if (grid[material->gridIndex + cols].type == Air) {
-		grid[material->gridIndex].type = Air;
-		grid[material->gridIndex].materialPointer = nullptr;
-		material->rect = grid[material->gridIndex + cols].rect;
-		grid[material->gridIndex + cols].type = Sand;
-		grid[material->gridIndex + cols].materialPointer = material;
-		material->gridIndex += cols;
-	}
-
-	else if (grid[material->gridIndex + cols].type == Sand) {
-		if (grid[material->gridIndex + cols - 1].type == Air && grid[material->gridIndex + cols + 1].type == Air) {
-			if (random <= 50) {
-				grid[material->gridIndex].type = Air;
-				grid[material->gridIndex].materialPointer = nullptr;
-				material->rect = grid[material->gridIndex + cols - 1].rect;
-				grid[material->gridIndex + cols - 1].type = Sand;
-				grid[material->gridIndex + cols - 1].materialPointer = material;
-				material->gridIndex += cols - 1;
-				return;
-			}
-			else if (random > 50) {
-				grid[material->gridIndex].type = Air;
-				grid[material->gridIndex].materialPointer = nullptr;
-				material->rect = grid[material->gridIndex + cols + 1].rect;
-				grid[material->gridIndex + cols + 1].type = Sand;
-				grid[material->gridIndex + cols + 1].materialPointer = material;
-				material->gridIndex += cols + 1;
-				return;
-			}
-		}
-		else if (grid[material->gridIndex + cols - 1].type == Air && !grid[material->gridIndex + cols + 1].type == Air) {
-			grid[material->gridIndex].type = Air;
-			grid[material->gridIndex].materialPointer = nullptr;
-			material->rect = grid[material->gridIndex + cols - 1].rect;
-			grid[material->gridIndex + cols - 1].type = Sand;
-			material->gridIndex += cols - 1;
-			return;
-		}
-
-		else if (!grid[material->gridIndex + cols - 1].type == Air && grid[material->gridIndex + cols + 1].type == Air) {
-			grid[material->gridIndex].type = Air;
-			grid[material->gridIndex].materialPointer = nullptr;
-			material->rect = grid[material->gridIndex + cols + 1].rect;
-			grid[material->gridIndex + cols + 1].type = Sand;
-			material->gridIndex += cols + 1;
-			return;
-		}
-	}
-	
-}
-
 void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt) {
 	SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
 	SDL_RenderClear(state.renderer);
@@ -184,7 +119,7 @@ void _Update(Block (&grid)[gridSize], std::vector<std::shared_ptr<Material>>& ma
 		x->DrawRectangle();
 		x->moverTimer += dt;
 		if (x->moverTimer >= sandFallingSpeed) {
-			_ApplyGravity(grid, x);
+			x->ApplyPhysics(grid);
 			x->moverTimer = 0;
 		}
 	}

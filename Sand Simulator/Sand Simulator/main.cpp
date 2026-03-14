@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <memory>
 #include "utils.h"
-#include "sand_grain.h"
+#include "material.h"
 #include "rectangle.h"
 #include "world_manager.h"
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 
 		_DisplayFPS(dt);
 
-		_CreateSandGrain(Grid, materials, state);
+		_CreateMaterial(Grid, materials, state);
 		_EraseMaterial(Grid, materials, state);
 		_Render(state, Grid, materials, dt);
 

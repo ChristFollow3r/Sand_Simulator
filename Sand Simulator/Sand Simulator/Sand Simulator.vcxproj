@@ -134,14 +134,16 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rectangle.cpp" />
+    <ClCompile Include="sandGrain.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="world_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="sandGrain.h" />
     <ClInclude Include="world_manager.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="rectangle.h" />
-    <ClInclude Include="sand_grain.h" />
+    <ClInclude Include="material.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <memory>
-#include "sand_grain.h"
+#include "material.h"
 #include <vector>
 #include "utils.h"
 
@@ -24,10 +24,9 @@ const float gravityForce = 9.8f;
 float deltaTime(Uint64& lastTick);
 
 void _AssignBlockRects(Block (&grid)[gridSize]);
-void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state);
+void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state);
 void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state);
 void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material);
-void _ApplyGravity(Block(&grid)[gridSize], std::shared_ptr<Material> material);
 
 void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt);
 void _Update(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt);
