@@ -10,7 +10,7 @@ void _InitSDLVideo() {
 
 void _InitWindowRenderer(SDL_State& state) {
 
-	state.window = SDL_CreateWindow("Sand Simulator", width, height, 0);
+	state.window = SDL_CreateWindow("Sand Simulator", width, height, SDL_WINDOW_RESIZABLE);
 	state.renderer = SDL_CreateRenderer(state.window, nullptr);
 
 	if (!state.window) {

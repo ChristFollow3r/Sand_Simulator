@@ -39,6 +39,13 @@ int main(int argc, char *argv[]) {
 
 		float dt = deltaTime(lastTick);
 
+		static float fpsTimer = 0;
+		fpsTimer += dt;
+		if (fpsTimer >= 1.0f) {
+			std::cout << "FPS: " << (int)(1.0f / dt) << std::endl;
+			fpsTimer = 0;
+		}
+
 		_CreateSandGrain(Grid, sand, state);
 		_EraseSandGrain(Grid, sand, state);
 		_Render(state, Grid, sand, dt);
