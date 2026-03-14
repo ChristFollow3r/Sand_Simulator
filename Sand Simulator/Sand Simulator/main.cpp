@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 		_DisplayFPS(dt);
 
 		_CreateSandGrain(Grid, sand, state);
-		_EraseSandGrain(Grid, sand, state);
+		_EraseMaterial(Grid, sand, state);
 		_Render(state, Grid, sand, dt);
 
 	}

@@ -33,7 +33,7 @@ void _AssignBlockRects(Block(&grid)[gridSize]) {
 
 }
 
-void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, SDL_State state) {
+void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state) {
 
 	float x;
 	float y;
@@ -56,15 +56,15 @@ void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materi
 				SDL_FRect rect = { spawnX, spawnY, 10, 15 };
 				int random = rand() % 5;
 				auto sandGrain = std::make_shared<Material>(rect, Colors[random], state.renderer);
-				_AtachSandGrain(grid, sandGrain);
-				sand.push_back(sandGrain);
+				_AtachMaterial(grid, sandGrain);
+				materials.push_back(sandGrain);
 
 			}
 		}
 	}
 }
 
-void _EraseSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, SDL_State state) {
+void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state) {
 
 	float x;
 	float y;
@@ -88,99 +88,99 @@ void _EraseSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materia
 				if (tempRow < 0 || tempRow >= rows || tempColumn < 0 || tempColumn >= cols) continue;
 
 				grid[index].type = Air;
-				auto it = std::find(sand.begin(), sand.end(), grid[index].sandGrainPointer);
-				if (it != sand.end()) sand.erase(it);
+				auto it = std::find(materials.begin(), materials.end(), grid[index].sandGrainPointer);
+				if (it != materials.end()) materials.erase(it);
 				grid[index].sandGrainPointer = nullptr;
 			}
 		}
 	}
 }
 
-void _AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<Material> sandGrain) {
+void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material) {
 
-	int row = static_cast<int>(sandGrain->rect.y) / 10;
-	int column = static_cast<int>(sandGrain->rect.x) / 10;
+	int row = static_cast<int>(material->rect.y) / 10;
+	int column = static_cast<int>(material->rect.x) / 10;
 	int index = (row * cols) + column;
 	
-	sandGrain->rect = grid[index].rect;
-	sandGrain->gridIndex = index;
+	material->rect = grid[index].rect;
+	material->gridIndex = index;
 	grid[index].type = Sand;
-	grid[index].sandGrainPointer = sandGrain;
+	grid[index].sandGrainPointer = material;
 }
 
-void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<Material> sandGrain) {
+void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<Material> material) {
 
 	int random = rand() % 101;
 	//int boundry = sandGrain->gridIndex % 80;
 
-	if (sandGrain == nullptr) return;
+	if (material == nullptr) return;
 
-	if (sandGrain->gridIndex + cols >= gridSize) { // Might have to come here later cause if I add various types and ground can't just be sand.
-		grid[sandGrain->gridIndex].type = Sand;
-		grid[sandGrain->gridIndex].sandGrainPointer = sandGrain;
+	if (material->gridIndex + cols >= gridSize) { // Might have to come here later cause if I add various types and ground can't just be sand.
+		grid[material->gridIndex].type = Sand;
+		grid[material->gridIndex].sandGrainPointer = material;
 		return;
 	}
 
-	if (grid[sandGrain->gridIndex + cols].type == Air) {
-		grid[sandGrain->gridIndex].type = Air;
-		grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
-		sandGrain->rect = grid[sandGrain->gridIndex + cols].rect;
-		grid[sandGrain->gridIndex + cols].type = Sand;
-		grid[sandGrain->gridIndex + cols].sandGrainPointer = sandGrain;
-		sandGrain->gridIndex += cols;
+	if (grid[material->gridIndex + cols].type == Air) {
+		grid[material->gridIndex].type = Air;
+		grid[material->gridIndex].sandGrainPointer = nullptr;
+		material->rect = grid[material->gridIndex + cols].rect;
+		grid[material->gridIndex + cols].type = Sand;
+		grid[material->gridIndex + cols].sandGrainPointer = material;
+		material->gridIndex += cols;
 	}
 
-	else if (grid[sandGrain->gridIndex + cols].type == Sand) {
-		if (grid[sandGrain->gridIndex + cols - 1].type == Air && grid[sandGrain->gridIndex + cols + 1].type == Air) {
+	else if (grid[material->gridIndex + cols].type == Sand) {
+		if (grid[material->gridIndex + cols - 1].type == Air && grid[material->gridIndex + cols + 1].type == Air) {
 			if (random <= 50) {
-				grid[sandGrain->gridIndex].type = Air;
-				grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
-				sandGrain->rect = grid[sandGrain->gridIndex + cols - 1].rect;
-				grid[sandGrain->gridIndex + cols - 1].type = Sand;
-				grid[sandGrain->gridIndex + cols - 1].sandGrainPointer = sandGrain;
-				sandGrain->gridIndex += cols - 1;
+				grid[material->gridIndex].type = Air;
+				grid[material->gridIndex].sandGrainPointer = nullptr;
+				material->rect = grid[material->gridIndex + cols - 1].rect;
+				grid[material->gridIndex + cols - 1].type = Sand;
+				grid[material->gridIndex + cols - 1].sandGrainPointer = material;
+				material->gridIndex += cols - 1;
 				return;
 			}
 			else if (random > 50) {
-				grid[sandGrain->gridIndex].type = Air;
-				grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
-				sandGrain->rect = grid[sandGrain->gridIndex + cols + 1].rect;
-				grid[sandGrain->gridIndex + cols + 1].type = Sand;
-				grid[sandGrain->gridIndex + cols + 1].sandGrainPointer = sandGrain;
-				sandGrain->gridIndex += cols + 1;
+				grid[material->gridIndex].type = Air;
+				grid[material->gridIndex].sandGrainPointer = nullptr;
+				material->rect = grid[material->gridIndex + cols + 1].rect;
+				grid[material->gridIndex + cols + 1].type = Sand;
+				grid[material->gridIndex + cols + 1].sandGrainPointer = material;
+				material->gridIndex += cols + 1;
 				return;
 			}
 		}
-		else if (grid[sandGrain->gridIndex + cols - 1].type == Air && !grid[sandGrain->gridIndex + cols + 1].type == Air) {
-			grid[sandGrain->gridIndex].type = Air;
-			grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
-			sandGrain->rect = grid[sandGrain->gridIndex + cols - 1].rect;
-			grid[sandGrain->gridIndex + cols - 1].type = Sand;
-			sandGrain->gridIndex += cols - 1;
+		else if (grid[material->gridIndex + cols - 1].type == Air && !grid[material->gridIndex + cols + 1].type == Air) {
+			grid[material->gridIndex].type = Air;
+			grid[material->gridIndex].sandGrainPointer = nullptr;
+			material->rect = grid[material->gridIndex + cols - 1].rect;
+			grid[material->gridIndex + cols - 1].type = Sand;
+			material->gridIndex += cols - 1;
 			return;
 		}
 
-		else if (!grid[sandGrain->gridIndex + cols - 1].type == Air && grid[sandGrain->gridIndex + cols + 1].type == Air) {
-			grid[sandGrain->gridIndex].type = Air;
-			grid[sandGrain->gridIndex].sandGrainPointer = nullptr;
-			sandGrain->rect = grid[sandGrain->gridIndex + cols + 1].rect;
-			grid[sandGrain->gridIndex + cols + 1].type = Sand;
-			sandGrain->gridIndex += cols + 1;
+		else if (!grid[material->gridIndex + cols - 1].type == Air && grid[material->gridIndex + cols + 1].type == Air) {
+			grid[material->gridIndex].type = Air;
+			grid[material->gridIndex].sandGrainPointer = nullptr;
+			material->rect = grid[material->gridIndex + cols + 1].rect;
+			grid[material->gridIndex + cols + 1].type = Sand;
+			material->gridIndex += cols + 1;
 			return;
 		}
 	}
 	
 }
 
-void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, float dt) {
+void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt) {
 	SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
 	SDL_RenderClear(state.renderer);
-	_Update(grid, sand, dt);
+	_Update(grid, materials, dt);
 	SDL_RenderPresent(state.renderer);
 }
 
-void _Update(Block (&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, float dt) {
-	for (auto x : sand) {
+void _Update(Block (&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt) {
+	for (auto x : materials) {
 		x->DrawRectangle();
 		x->moverTimer += dt;
 		if (x->moverTimer >= sandFallingSpeed) {

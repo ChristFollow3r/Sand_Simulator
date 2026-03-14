@@ -25,8 +25,8 @@ float deltaTime(Uint64& lastTick);
 
 void _AssignBlockRects(Block (&grid)[gridSize]);
 void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, SDL_State state);
-void _EraseSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, SDL_State state);
-void _AtachSandGrain(Block (&grid)[gridSize], std::shared_ptr<Material> sandGrain);
+void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, SDL_State state);
+void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> sandGrain);
 void _ApplyGravity(Block(&grid)[gridSize], std::shared_ptr<Material> sandGrain);
 
 void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, float dt);
