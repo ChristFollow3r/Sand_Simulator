@@ -17,4 +17,6 @@ struct SDL_State {
 	SDL_Renderer* renderer;
 };
 
+void _CleanUp(SDL_State& state);
 void _InitSDLVideo();
+void _InitWindowRenderer(SDL_State& state);

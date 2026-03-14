@@ -9,35 +9,24 @@
 #include "world_manager.h"
 #include "utils.h"
 
-void cleanUp(SDL_State& state);
-
 int main(int argc, char *argv[]) {
 
 	srand(time(NULL));
 	SDL_State state;
+
+
 	Uint64 lastTick = SDL_GetTicks();
 	deltaTime(lastTick);
-	bool running = true;
 
 	_InitSDLVideo();
+	_InitWindowRenderer(state);
 
-	state.window = SDL_CreateWindow("Sand Simulator", width, height, 0); // Also make this a function
-	if (!state.window) {
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", "Unable to initialize SDL Window", nullptr);
-		cleanUp(state);
-		return 1;
-	}
+	bool running = true;
 
-	state.renderer = SDL_CreateRenderer(state.window, nullptr); // Make this a function
-	if (!state.renderer) {
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", "Unable to create the SDL Renderer", nullptr);
-		cleanUp(state);
-		return 1;
-	}
 	
+	std::vector<std::shared_ptr<SandGrain>> sand;
 	Block Grid[gridSize];
 	_AssignBlockRects(Grid); 
-	std::vector<std::shared_ptr<SandGrain>> sand;
 
 	while (running) {
 
@@ -66,12 +55,8 @@ int main(int argc, char *argv[]) {
 
 	}
 
-	cleanUp(state);
+	_CleanUp(state);
 	return 0;
 }
 
-void cleanUp(SDL_State& state) {
-	SDL_DestroyRenderer(state.renderer);
-	SDL_DestroyWindow(state.window);
-	SDL_Quit();
-}
+
