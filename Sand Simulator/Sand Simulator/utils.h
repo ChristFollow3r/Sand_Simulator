@@ -2,8 +2,8 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 
-const int width = 1280;
-const int height = 720;
+const int width = 1920;
+const int height = 1080;
 
 const int cols = 192;
 const int rows = 108;
