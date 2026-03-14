@@ -88,9 +88,9 @@ void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material
 				if (tempRow < 0 || tempRow >= rows || tempColumn < 0 || tempColumn >= cols) continue;
 
 				grid[index].type = Air;
-				auto it = std::find(materials.begin(), materials.end(), grid[index].sandGrainPointer);
+				auto it = std::find(materials.begin(), materials.end(), grid[index].materialPointer);
 				if (it != materials.end()) materials.erase(it);
-				grid[index].sandGrainPointer = nullptr;
+				grid[index].materialPointer = nullptr;
 			}
 		}
 	}
@@ -105,7 +105,7 @@ void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material)
 	material->rect = grid[index].rect;
 	material->gridIndex = index;
 	grid[index].type = Sand;
-	grid[index].sandGrainPointer = material;
+	grid[index].materialPointer = material;
 }
 
 void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<Material> material) {
@@ -117,16 +117,16 @@ void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<Material> material) 
 
 	if (material->gridIndex + cols >= gridSize) { // Might have to come here later cause if I add various types and ground can't just be sand.
 		grid[material->gridIndex].type = Sand;
-		grid[material->gridIndex].sandGrainPointer = material;
+		grid[material->gridIndex].materialPointer = material;
 		return;
 	}
 
 	if (grid[material->gridIndex + cols].type == Air) {
 		grid[material->gridIndex].type = Air;
-		grid[material->gridIndex].sandGrainPointer = nullptr;
+		grid[material->gridIndex].materialPointer = nullptr;
 		material->rect = grid[material->gridIndex + cols].rect;
 		grid[material->gridIndex + cols].type = Sand;
-		grid[material->gridIndex + cols].sandGrainPointer = material;
+		grid[material->gridIndex + cols].materialPointer = material;
 		material->gridIndex += cols;
 	}
 
@@ -134,26 +134,26 @@ void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<Material> material) 
 		if (grid[material->gridIndex + cols - 1].type == Air && grid[material->gridIndex + cols + 1].type == Air) {
 			if (random <= 50) {
 				grid[material->gridIndex].type = Air;
-				grid[material->gridIndex].sandGrainPointer = nullptr;
+				grid[material->gridIndex].materialPointer = nullptr;
 				material->rect = grid[material->gridIndex + cols - 1].rect;
 				grid[material->gridIndex + cols - 1].type = Sand;
-				grid[material->gridIndex + cols - 1].sandGrainPointer = material;
+				grid[material->gridIndex + cols - 1].materialPointer = material;
 				material->gridIndex += cols - 1;
 				return;
 			}
 			else if (random > 50) {
 				grid[material->gridIndex].type = Air;
-				grid[material->gridIndex].sandGrainPointer = nullptr;
+				grid[material->gridIndex].materialPointer = nullptr;
 				material->rect = grid[material->gridIndex + cols + 1].rect;
 				grid[material->gridIndex + cols + 1].type = Sand;
-				grid[material->gridIndex + cols + 1].sandGrainPointer = material;
+				grid[material->gridIndex + cols + 1].materialPointer = material;
 				material->gridIndex += cols + 1;
 				return;
 			}
 		}
 		else if (grid[material->gridIndex + cols - 1].type == Air && !grid[material->gridIndex + cols + 1].type == Air) {
 			grid[material->gridIndex].type = Air;
-			grid[material->gridIndex].sandGrainPointer = nullptr;
+			grid[material->gridIndex].materialPointer = nullptr;
 			material->rect = grid[material->gridIndex + cols - 1].rect;
 			grid[material->gridIndex + cols - 1].type = Sand;
 			material->gridIndex += cols - 1;
@@ -162,7 +162,7 @@ void _ApplyGravity(Block (&grid)[gridSize], std::shared_ptr<Material> material) 
 
 		else if (!grid[material->gridIndex + cols - 1].type == Air && grid[material->gridIndex + cols + 1].type == Air) {
 			grid[material->gridIndex].type = Air;
-			grid[material->gridIndex].sandGrainPointer = nullptr;
+			grid[material->gridIndex].materialPointer = nullptr;
 			material->rect = grid[material->gridIndex + cols + 1].rect;
 			grid[material->gridIndex + cols + 1].type = Sand;
 			material->gridIndex += cols + 1;

@@ -16,7 +16,7 @@ enum Type {
 struct Block {
 	SDL_FRect rect;
 	Type type;
-	std::shared_ptr<Material> sandGrainPointer;
+	std::shared_ptr<Material> materialPointer;
 };
 
 const float gravityForce = 9.8f;
@@ -24,10 +24,10 @@ const float gravityForce = 9.8f;
 float deltaTime(Uint64& lastTick);
 
 void _AssignBlockRects(Block (&grid)[gridSize]);
-void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, SDL_State state);
-void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, SDL_State state);
-void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> sandGrain);
-void _ApplyGravity(Block(&grid)[gridSize], std::shared_ptr<Material> sandGrain);
+void _CreateSandGrain(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state);
+void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state);
+void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material);
+void _ApplyGravity(Block(&grid)[gridSize], std::shared_ptr<Material> material);
 
-void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, float dt);
-void _Update(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& sand, float dt);
+void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt);
+void _Update(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt);
