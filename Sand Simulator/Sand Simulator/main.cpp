@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
 	Block Grid[gridSize];
 	_AssignBlockRects(Grid); 
 
+	int selectedMaterial = 0;
+
 	while (running) {
 
 		SDL_Event event{0}; 
@@ -34,6 +36,11 @@ int main(int argc, char *argv[]) {
 				case (SDL_EVENT_QUIT):
 					running = false;
 					break;
+
+				case (SDL_EVENT_KEY_DOWN):
+					if (event.key.key == SDLK_1) selectedMaterial = 0;
+					if (event.key.key == SDLK_2) selectedMaterial = 1;
+					break;
 			}
 		}
 
@@ -41,7 +48,7 @@ int main(int argc, char *argv[]) {
 
 		_DisplayFPS(dt);
 
-		_CreateMaterial(Grid, materials, state);
+		_CreateMaterial(Grid, materials, state, selectedMaterial);
 		_EraseMaterial(Grid, materials, state);
 		_Render(state, Grid, materials, dt);
 

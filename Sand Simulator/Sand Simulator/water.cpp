@@ -6,7 +6,8 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 
 	if (this == nullptr) return;
 
-	if (this->gridIndex + cols >= gridSize) return; //Prevents mullpointer acces error
+	if (this->gridIndex + cols >= gridSize) return; //Prevents nullpointer acces error
+
 	if (grid[this->gridIndex + 1].type != Air
 		&& grid[this->gridIndex - 1].type != Air && grid[this->gridIndex + cols + 1].type != Air && grid[this->gridIndex + cols - 1].type != Air) return;
 
@@ -65,7 +66,9 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 	}
 
 	else  { // Move left or right
+
 		if (random > 50) {
+
 			if (this->gridIndex + 1 >= gridSize || grid[this->gridIndex + 1].type != Air) return;
 			else {
 				grid[this->gridIndex].type = Air;
@@ -77,7 +80,9 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 				return;
 			}
 		}
+
 		else {
+
 			if (this->gridIndex - 1 < 0 || grid[this->gridIndex - 1].type != Air) return;
 			else {
 				grid[this->gridIndex].type = Air;

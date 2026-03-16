@@ -18,6 +18,18 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 		this->gridIndex += cols;
 	}
 
+	else if (grid[this->gridIndex + cols].type == WaterType) {
+		grid[this->gridIndex].type = WaterType;
+		grid[this->gridIndex].materialPointer = grid[this->gridIndex + cols].materialPointer;
+		grid[this->gridIndex].materialPointer->gridIndex = this->gridIndex;
+		grid[this->gridIndex].materialPointer->rect = grid[this->gridIndex].rect;
+
+		grid[this->gridIndex + cols].type = Sand;
+		grid[this->gridIndex + cols].materialPointer = shared_from_this();
+		this->rect = grid[this->gridIndex + cols].rect;
+		this->gridIndex += cols;
+	}
+
 	else if (grid[this->gridIndex + cols].type != Air) { // Change this eventually so it can go through water
 		if (grid[this->gridIndex + cols - 1].type == Air && grid[this->gridIndex + cols + 1].type == Air) {
 			if (random <= 50) {

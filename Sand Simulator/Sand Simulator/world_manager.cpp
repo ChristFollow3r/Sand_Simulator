@@ -35,7 +35,7 @@ void _AssignBlockRects(Block(&grid)[gridSize]) {
 
 }
 
-void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state) { // This is still hardcoded
+void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state, int selectedMaterial) {
 
 	float x;
 	float y;
@@ -51,13 +51,20 @@ void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materia
 
 				float spawnX = x + i * 10.0f;
 				float spawnY = y + j * 10.0f;
-				if (spawnX < 0.0f || spawnX >= width || spawnY < 0.0f || spawnY >= height) continue;
 
+				if (spawnX < 0.0f || spawnX >= width || spawnY < 0.0f || spawnY >= height) continue;
 				SDL_FRect rect = { spawnX, spawnY, 10, 15 };
-				int random = rand() % 5;
-				auto water = std::make_shared<Water>(rect, state.renderer);
-				_AtachMaterial(grid, water);
-				materials.push_back(water);
+				std::shared_ptr<Material> material;
+
+				switch (selectedMaterial) {
+				case 0:
+					material = std::make_shared<SandGrain>(rect, state.renderer);
+					break;
+				case 1:
+					material = std::make_shared<Water>(rect, state.renderer);
+				}
+				_AtachMaterial(grid, material);
+				materials.push_back(material);
 
 			}
 		}
