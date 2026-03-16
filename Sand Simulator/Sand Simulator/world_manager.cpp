@@ -1,5 +1,6 @@
 #include "world_manager.h"
 #include "sandGrain.h"
+#include "water.h"
 #include <algorithm>
 #include <vector>
 
@@ -54,9 +55,9 @@ void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materia
 
 				SDL_FRect rect = { spawnX, spawnY, 10, 15 };
 				int random = rand() % 5;
-				auto sandGrain = std::make_shared<SandGrain>(rect, state.renderer);
-				_AtachMaterial(grid, sandGrain);
-				materials.push_back(sandGrain);
+				auto water = std::make_shared<Water>(rect, state.renderer);
+				_AtachMaterial(grid, water);
+				materials.push_back(water);
 
 			}
 		}

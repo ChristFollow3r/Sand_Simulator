@@ -8,7 +8,7 @@
 enum Type {
 	Air,
 	Sand,
-	Water,
+	WaterType,
 	Stone,
 	Fire
 };
