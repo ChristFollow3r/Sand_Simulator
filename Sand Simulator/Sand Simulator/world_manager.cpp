@@ -34,7 +34,7 @@ void _AssignBlockRects(Block(&grid)[gridSize]) {
 
 }
 
-void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state) {
+void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state) { // This is still hardcoded
 
 	float x;
 	float y;

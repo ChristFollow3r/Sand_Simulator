@@ -7,38 +7,34 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 
 	if (this == nullptr) return;
 
-	if (this->gridIndex + cols >= gridSize) { // Might have to come here later cause if I add various types and ground can't just be sand.
-		grid[this->gridIndex].type = Sand;
-		grid[this->gridIndex].materialPointer = shared_from_this();
-		return;
-	}
+	if (this->gridIndex + cols >= gridSize) return;
 
 	if (grid[this->gridIndex + cols].type == Air) {
 		grid[this->gridIndex].type = Air;
 		grid[this->gridIndex].materialPointer = nullptr;
-		this->rect = grid[this->gridIndex + cols].rect;
 		grid[this->gridIndex + cols].type = Sand;
 		grid[this->gridIndex + cols].materialPointer = shared_from_this();
+		this->rect = grid[this->gridIndex + cols].rect;
 		this->gridIndex += cols;
 	}
 
-	else if (grid[this->gridIndex + cols].type == Sand) {
+	else if (grid[this->gridIndex + cols].type != Air) { // Change this eventually so it can go through water
 		if (grid[this->gridIndex + cols - 1].type == Air && grid[this->gridIndex + cols + 1].type == Air) {
 			if (random <= 50) {
 				grid[this->gridIndex].type = Air;
 				grid[this->gridIndex].materialPointer = nullptr;
-				this->rect = grid[this->gridIndex + cols - 1].rect;
 				grid[this->gridIndex + cols - 1].type = Sand;
 				grid[this->gridIndex + cols - 1].materialPointer = shared_from_this();
+				this->rect = grid[this->gridIndex + cols - 1].rect;
 				this->gridIndex += cols - 1;
 				return;
 			}
 			else if (random > 50) {
 				grid[this->gridIndex].type = Air;
 				grid[this->gridIndex].materialPointer = nullptr;
-				this->rect = grid[this->gridIndex + cols + 1].rect;
 				grid[this->gridIndex + cols + 1].type = Sand;
 				grid[this->gridIndex + cols + 1].materialPointer = shared_from_this();
+				this->rect = grid[this->gridIndex + cols + 1].rect;
 				this->gridIndex += cols + 1;
 				return;
 			}
@@ -46,8 +42,8 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 		else if (grid[this->gridIndex + cols - 1].type == Air && !grid[this->gridIndex + cols + 1].type == Air) {
 			grid[this->gridIndex].type = Air;
 			grid[this->gridIndex].materialPointer = nullptr;
-			this->rect = grid[this->gridIndex + cols - 1].rect;
 			grid[this->gridIndex + cols - 1].type = Sand;
+			this->rect = grid[this->gridIndex + cols - 1].rect;
 			this->gridIndex += cols - 1;
 			return;
 		}
@@ -55,8 +51,8 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 		else if (!grid[this->gridIndex + cols - 1].type == Air && grid[this->gridIndex + cols + 1].type == Air) {
 			grid[this->gridIndex].type = Air;
 			grid[this->gridIndex].materialPointer = nullptr;
-			this->rect = grid[this->gridIndex + cols + 1].rect;
 			grid[this->gridIndex + cols + 1].type = Sand;
+			this->rect = grid[this->gridIndex + cols + 1].rect;
 			this->gridIndex += cols + 1;
 			return;
 		}
