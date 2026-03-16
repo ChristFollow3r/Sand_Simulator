@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
 
 		float dt = deltaTime(lastTick);
 
-		//_DisplayFPS(dt);
+		_DisplayFPS(dt);
 
 		_CreateMaterial(Grid, materials, state, selectedMaterial);
 		_EraseMaterial(Grid, materials, state);
