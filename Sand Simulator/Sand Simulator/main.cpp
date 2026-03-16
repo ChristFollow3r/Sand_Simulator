@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
 				case (SDL_EVENT_KEY_DOWN):
 					if (event.key.key == SDLK_1) selectedMaterial = 0;
 					if (event.key.key == SDLK_2) selectedMaterial = 1;
+					if (event.key.key == SDLK_3) selectedMaterial = 2;
 					if (event.key.key == SDLK_ESCAPE) exit(0);
 					break;
 			}

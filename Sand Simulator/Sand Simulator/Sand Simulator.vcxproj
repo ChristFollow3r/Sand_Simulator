@@ -135,12 +135,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rectangle.cpp" />
     <ClCompile Include="sandGrain.cpp" />
+    <ClCompile Include="stone.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="water.cpp" />
     <ClCompile Include="world_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sandGrain.h" />
+    <ClInclude Include="stone.h" />
     <ClInclude Include="water.h" />
     <ClInclude Include="world_manager.h" />
     <ClInclude Include="utils.h" />

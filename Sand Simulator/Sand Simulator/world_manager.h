@@ -6,11 +6,11 @@
 #include "utils.h"
 
 enum Type {
-	Air,
-	Sand,
+	AirType,
+	SandType,
 	WaterType,
-	Stone,
-	Fire
+	StoneType,
+	FireType
 };
 
 struct Block {

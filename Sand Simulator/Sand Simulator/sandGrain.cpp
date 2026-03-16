@@ -9,10 +9,10 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 
 	if (this->gridIndex + cols >= gridSize) return;
 
-	if (grid[this->gridIndex + cols].type == Air) {
-		grid[this->gridIndex].type = Air;
+	if (grid[this->gridIndex + cols].type == AirType) {
+		grid[this->gridIndex].type = AirType;
 		grid[this->gridIndex].materialPointer = nullptr;
-		grid[this->gridIndex + cols].type = Sand;
+		grid[this->gridIndex + cols].type = SandType;
 		grid[this->gridIndex + cols].materialPointer = shared_from_this();
 		this->rect = grid[this->gridIndex + cols].rect;
 		this->gridIndex += cols;
@@ -24,32 +24,32 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 		grid[this->gridIndex].materialPointer->gridIndex = this->gridIndex;
 		grid[this->gridIndex].materialPointer->rect = grid[this->gridIndex].rect;
 
-		grid[this->gridIndex + cols].type = Sand;
+		grid[this->gridIndex + cols].type = SandType;
 		grid[this->gridIndex + cols].materialPointer = shared_from_this();
 		this->rect = grid[this->gridIndex + cols].rect;
 		this->gridIndex += cols;
 	}
 
-	else if (grid[this->gridIndex + cols].type != Air) { // Change this eventually so it can go through water
+	else if (grid[this->gridIndex + cols].type != AirType) { // Change this eventually so it can go through water
 
-		bool leftFree = grid[this->gridIndex + cols - 1].type == Air || grid[this->gridIndex + cols - 1].type == WaterType;
-		bool rightFree = grid[this->gridIndex + cols + 1].type == Air || grid[this->gridIndex + cols + 1].type == WaterType;
+		bool leftFree = grid[this->gridIndex + cols - 1].type == AirType || grid[this->gridIndex + cols - 1].type == WaterType;
+		bool rightFree = grid[this->gridIndex + cols + 1].type == AirType || grid[this->gridIndex + cols + 1].type == WaterType;
 
 
 		if (leftFree && rightFree) {
 			if (random <= 50) {
-				grid[this->gridIndex].type = Air;
+				grid[this->gridIndex].type = AirType;
 				grid[this->gridIndex].materialPointer = nullptr;
-				grid[this->gridIndex + cols - 1].type = Sand;
+				grid[this->gridIndex + cols - 1].type = SandType;
 				grid[this->gridIndex + cols - 1].materialPointer = shared_from_this();
 				this->rect = grid[this->gridIndex + cols - 1].rect;
 				this->gridIndex += cols - 1;
 				return;
 			}
 			else if (random > 50) {
-				grid[this->gridIndex].type = Air;
+				grid[this->gridIndex].type = AirType;
 				grid[this->gridIndex].materialPointer = nullptr;
-				grid[this->gridIndex + cols + 1].type = Sand;
+				grid[this->gridIndex + cols + 1].type = SandType;
 				grid[this->gridIndex + cols + 1].materialPointer = shared_from_this();
 				this->rect = grid[this->gridIndex + cols + 1].rect;
 				this->gridIndex += cols + 1;
@@ -57,18 +57,18 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 			}
 		}
 		else if (leftFree) {
-			grid[this->gridIndex].type = Air;
+			grid[this->gridIndex].type = AirType;
 			grid[this->gridIndex].materialPointer = nullptr;
-			grid[this->gridIndex + cols - 1].type = Sand;
+			grid[this->gridIndex + cols - 1].type = SandType;
 			this->rect = grid[this->gridIndex + cols - 1].rect;
 			this->gridIndex += cols - 1;
 			return;
 		}
 
 		else if (rightFree) {
-			grid[this->gridIndex].type = Air;
+			grid[this->gridIndex].type = AirType;
 			grid[this->gridIndex].materialPointer = nullptr;
-			grid[this->gridIndex + cols + 1].type = Sand;
+			grid[this->gridIndex + cols + 1].type = SandType;
 			this->rect = grid[this->gridIndex + cols + 1].rect;
 			this->gridIndex += cols + 1;
 			return;

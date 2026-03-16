@@ -8,11 +8,11 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 
 	if (this->gridIndex + cols >= gridSize) return; //Prevents nullpointer acces error
 
-	if (grid[this->gridIndex + 1].type != Air
-		&& grid[this->gridIndex - 1].type != Air && grid[this->gridIndex + cols + 1].type != Air && grid[this->gridIndex + cols - 1].type != Air) return;
+	if (grid[this->gridIndex + 1].type != AirType
+		&& grid[this->gridIndex - 1].type != AirType && grid[this->gridIndex + cols + 1].type != AirType && grid[this->gridIndex + cols - 1].type != AirType) return;
 
-	if (grid[this->gridIndex + cols].type == Air) { // Falls 
-		grid[this->gridIndex].type = Air;
+	if (grid[this->gridIndex + cols].type == AirType) { // Falls 
+		grid[this->gridIndex].type = AirType;
 		grid[this->gridIndex].materialPointer = nullptr;
 		grid[this->gridIndex + cols].type = Type::WaterType;
 		grid[this->gridIndex + cols].materialPointer = shared_from_this();
@@ -24,7 +24,7 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 	if (this->gridIndex + cols == gridSize) {
 		if (random > 50) {
 			if (this->gridIndex + 1 >= gridSize) return;
-			grid[this->gridIndex].type = Air;
+			grid[this->gridIndex].type = AirType;
 			grid[this->gridIndex].materialPointer = nullptr;
 			grid[this->gridIndex + 1].type = Type::WaterType;
 			grid[this->gridIndex + 1].materialPointer = shared_from_this();
@@ -33,7 +33,7 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 		}
 		else {
 			if (this->gridIndex - 1 < 0) return;
-			grid[this->gridIndex].type = Air;
+			grid[this->gridIndex].type = AirType;
 			grid[this->gridIndex].materialPointer = nullptr;
 			grid[this->gridIndex - 1].type = Type::WaterType;
 			grid[this->gridIndex - 1].materialPointer = shared_from_this();
@@ -45,8 +45,8 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 
 	if (this->gridIndex + (cols - 1) < 0 || this->gridIndex + (cols + 1) >= gridSize) return; //Prevents mullpointer acces error
 
-	else if (grid[(this->gridIndex + cols) - 1].type != Air && grid[(this->gridIndex + cols) + 1].type == Air) { // Move down right
-		grid[this->gridIndex].type = Air;
+	else if (grid[(this->gridIndex + cols) - 1].type != AirType && grid[(this->gridIndex + cols) + 1].type == AirType) { // Move down right
+		grid[this->gridIndex].type = AirType;
 		grid[this->gridIndex].materialPointer = nullptr;
 		grid[(this->gridIndex + cols) + 1].type = Type::WaterType;
 		grid[(this->gridIndex + cols) + 1].materialPointer = shared_from_this();
@@ -55,8 +55,8 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 		return;
 	}
 
-	else if (grid[(this->gridIndex + cols) + 1].type != Air && grid[(this->gridIndex + cols) - 1].type == Air) { // Move down left
-		grid[this->gridIndex].type = Air;
+	else if (grid[(this->gridIndex + cols) + 1].type != AirType && grid[(this->gridIndex + cols) - 1].type == AirType) { // Move down left
+		grid[this->gridIndex].type = AirType;
 		grid[this->gridIndex].materialPointer = nullptr;
 		grid[(this->gridIndex + cols) - 1].type = Type::WaterType;
 		grid[(this->gridIndex + cols) - 1].materialPointer = shared_from_this();
@@ -69,9 +69,9 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 
 		if (random > 50) {
 
-			if (this->gridIndex + 1 >= gridSize || grid[this->gridIndex + 1].type != Air) return;
+			if (this->gridIndex + 1 >= gridSize || grid[this->gridIndex + 1].type != AirType) return;
 			else {
-				grid[this->gridIndex].type = Air;
+				grid[this->gridIndex].type = AirType;
 				grid[this->gridIndex].materialPointer = nullptr;
 				grid[this->gridIndex + 1].type = Type::WaterType;
 				grid[this->gridIndex + 1].materialPointer = shared_from_this();
@@ -83,9 +83,9 @@ void Water::ApplyPhysics(Block (&grid)[gridSize]) {
 
 		else {
 
-			if (this->gridIndex - 1 < 0 || grid[this->gridIndex - 1].type != Air) return;
+			if (this->gridIndex - 1 < 0 || grid[this->gridIndex - 1].type != AirType) return;
 			else {
-				grid[this->gridIndex].type = Air;
+				grid[this->gridIndex].type = AirType;
 				grid[this->gridIndex].materialPointer = nullptr;
 				grid[this->gridIndex - 1].type = Type::WaterType;
 				grid[this->gridIndex - 1].materialPointer = shared_from_this();

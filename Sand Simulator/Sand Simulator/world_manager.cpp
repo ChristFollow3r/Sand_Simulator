@@ -1,6 +1,7 @@
 #include "world_manager.h"
 #include "sandGrain.h"
 #include "water.h"
+#include "stone.h"
 #include <algorithm>
 #include <vector>
 
@@ -26,7 +27,7 @@ void _AssignBlockRects(Block(&grid)[gridSize]) {
 		{
 			SDL_FRect newRect = { x, y, height, width };
 			grid[i * cols + j].rect = newRect;
-			grid[i * cols + j].type = Air;
+			grid[i * cols + j].type = AirType;
 			x += 10;
 		}
 		x = 0;
@@ -62,6 +63,10 @@ void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materia
 					break;
 				case 1:
 					material = std::make_shared<Water>(rect, state.renderer);
+					break;
+				case 2:
+					material = std::make_shared<Stone>(rect, state.renderer);
+					break;
 				}
 				_AtachMaterial(grid, material);
 				materials.push_back(material);
@@ -94,7 +99,7 @@ void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material
 
 				if (tempRow < 0 || tempRow >= rows || tempColumn < 0 || tempColumn >= cols) continue;
 
-				grid[index].type = Air;
+				grid[index].type = AirType;
 				auto it = std::find(materials.begin(), materials.end(), grid[index].materialPointer);
 				if (it != materials.end()) materials.erase(it);
 				grid[index].materialPointer = nullptr;
@@ -111,7 +116,7 @@ void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material)
 	
 	material->rect = grid[index].rect;
 	material->gridIndex = index;
-	grid[index].type = Sand;
+	grid[index].type = SandType;
 	grid[index].materialPointer = material;
 }
 
