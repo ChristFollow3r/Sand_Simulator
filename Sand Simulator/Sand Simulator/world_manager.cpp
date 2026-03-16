@@ -109,14 +109,13 @@ void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material
 }
 
 void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material) {
-
 	int row = static_cast<int>(material->rect.y) / 10;
 	int column = static_cast<int>(material->rect.x) / 10;
 	int index = (row * cols) + column;
 	
 	material->rect = grid[index].rect;
 	material->gridIndex = index;
-	grid[index].type = SandType;
+	grid[index].type = grid[material->gridIndex].type;
 	grid[index].materialPointer = material;
 }
 
