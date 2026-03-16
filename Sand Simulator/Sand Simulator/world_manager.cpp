@@ -45,6 +45,7 @@ void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materia
 
 		x = std::clamp(x, 0.0f, (float)(width - 1));
 		y = std::clamp(y, 0.0f, (float)(height - 1));
+		Type currentType;
 
 		for (int i = -1; i < 1; i++)
 		{
@@ -60,15 +61,18 @@ void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materia
 				switch (selectedMaterial) {
 				case 0:
 					material = std::make_shared<SandGrain>(rect, state.renderer);
+					currentType = AirType;
 					break;
 				case 1:
 					material = std::make_shared<Water>(rect, state.renderer);
+					currentType = WaterType;
 					break;
 				case 2:
 					material = std::make_shared<Stone>(rect, state.renderer);
+					currentType = StoneType;
 					break;
 				}
-				_AtachMaterial(grid, material);
+				_AtachMaterial(grid, material, currentType);
 				materials.push_back(material);
 
 			}
@@ -108,14 +112,14 @@ void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material
 	}
 }
 
-void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material) {
+void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material, Type materialType) {
 	int row = static_cast<int>(material->rect.y) / 10;
 	int column = static_cast<int>(material->rect.x) / 10;
 	int index = (row * cols) + column;
 	
 	material->rect = grid[index].rect;
 	material->gridIndex = index;
-	grid[index].type = grid[material->gridIndex].type;
+	grid[index].type = materialType;
 	grid[index].materialPointer = material;
 }
 
