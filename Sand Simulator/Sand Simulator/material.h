@@ -13,6 +13,7 @@ class Material : public Rectangle, public std::enable_shared_from_this<Material>
 
 	public:
 
+		float fallingSpeed = 0;
 		float moverTimer = 0;
 		int gridIndex = 0;
 

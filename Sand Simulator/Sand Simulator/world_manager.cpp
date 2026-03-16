@@ -61,7 +61,7 @@ void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materia
 				switch (selectedMaterial) {
 				case 0:
 					material = std::make_shared<SandGrain>(rect, state.renderer);
-					currentType = AirType;
+					currentType = SandType;
 					break;
 				case 1:
 					material = std::make_shared<Water>(rect, state.renderer);
@@ -134,7 +134,7 @@ void _Update(Block (&grid)[gridSize], std::vector<std::shared_ptr<Material>>& ma
 	for (auto x : materials) {
 		x->DrawRectangle();
 		x->moverTimer += dt;
-		if (x->moverTimer >= sandFallingSpeed) {
+		if (x->moverTimer >= x->fallingSpeed) {
 			x->ApplyPhysics(grid);
 			x->moverTimer = 0;
 		}

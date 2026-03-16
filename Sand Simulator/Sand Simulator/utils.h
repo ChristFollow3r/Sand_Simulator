@@ -10,8 +10,6 @@ const int rows = 108;
 const int gridSize = cols * rows;
 const int cellSize = 10;
 
-const float sandFallingSpeed = 0.0005f;
-
 struct SDL_State {
 	SDL_Window* window;
 	SDL_Renderer* renderer;
