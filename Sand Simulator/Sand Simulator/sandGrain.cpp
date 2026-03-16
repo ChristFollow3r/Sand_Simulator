@@ -31,7 +31,12 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 	}
 
 	else if (grid[this->gridIndex + cols].type != Air) { // Change this eventually so it can go through water
-		if (grid[this->gridIndex + cols - 1].type == Air && grid[this->gridIndex + cols + 1].type == Air) {
+
+		bool leftFree = grid[this->gridIndex + cols - 1].type == Air || grid[this->gridIndex + cols - 1].type == WaterType;
+		bool rightFree = grid[this->gridIndex + cols + 1].type == Air || grid[this->gridIndex + cols + 1].type == WaterType;
+
+
+		if (leftFree && rightFree) {
 			if (random <= 50) {
 				grid[this->gridIndex].type = Air;
 				grid[this->gridIndex].materialPointer = nullptr;
@@ -51,7 +56,7 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 				return;
 			}
 		}
-		else if (grid[this->gridIndex + cols - 1].type == Air && !grid[this->gridIndex + cols + 1].type == Air) {
+		else if (leftFree) {
 			grid[this->gridIndex].type = Air;
 			grid[this->gridIndex].materialPointer = nullptr;
 			grid[this->gridIndex + cols - 1].type = Sand;
@@ -60,7 +65,7 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 			return;
 		}
 
-		else if (!grid[this->gridIndex + cols - 1].type == Air && grid[this->gridIndex + cols + 1].type == Air) {
+		else if (rightFree) {
 			grid[this->gridIndex].type = Air;
 			grid[this->gridIndex].materialPointer = nullptr;
 			grid[this->gridIndex + cols + 1].type = Sand;
