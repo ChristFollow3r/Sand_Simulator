@@ -19,6 +19,6 @@ class Material : public Rectangle, public std::enable_shared_from_this<Material>
 
 		Material(SDL_FRect rect, SDL_Color color, SDL_Renderer *renderer) : Rectangle(rect, color, renderer) {}
 
-		virtual void ApplyPhysics(Block (&grid)[gridSize]) = 0;
+		virtual void ApplyPhysics(Block* grid) = 0;
 
 };

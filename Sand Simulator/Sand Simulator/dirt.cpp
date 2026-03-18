@@ -1,6 +1,6 @@
 #include "dirt.h"
 
-void Dirt::ApplyPhysics(Block(&grid)[gridSize]) {
+void Dirt::ApplyPhysics(Block* grid) {
 
 	int random = rand() % 101;
 

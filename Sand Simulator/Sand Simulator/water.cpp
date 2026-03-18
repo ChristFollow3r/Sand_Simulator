@@ -1,6 +1,6 @@
 #include "water.h"
 
-void Water::ApplyPhysics(Block (&grid)[gridSize]) {
+void Water::ApplyPhysics(Block* grid) {
 
 	auto moveTo = [&](int targetPosition) {
 		grid[this->gridIndex].type = AirType;

@@ -2,13 +2,13 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 
-const int width = 1920;
-const int height = 1080;
+const int width = 1080;
+const int height = 720;
 
-const int cols = 192;
-const int rows = 108;
+const int cols = 216;
+const int rows = 144;
 const int gridSize = cols * rows;
-const int cellSize = 10;
+const int cellSize = 5;
 
 struct SDL_State {
 	SDL_Window* window;

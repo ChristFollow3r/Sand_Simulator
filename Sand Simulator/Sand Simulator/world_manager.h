@@ -24,10 +24,10 @@ const float gravityForce = 9.8f;
 
 float deltaTime(Uint64& lastTick);
 
-void _AssignBlockRects(Block (&grid)[gridSize]);
-void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state, int selectedMaterial);
-void _EraseMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, SDL_State state);
-void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material, Type materialType);
+void _AssignBlockRects(Block* grid);
+void _CreateMaterial(Block* grid, std::vector<std::shared_ptr<Material>>& materials, SDL_State state, int selectedMaterial);
+void _EraseMaterial(Block* grid, std::vector<std::shared_ptr<Material>>& materials, SDL_State state);
+void _AtachMaterial(Block* grid, std::shared_ptr<Material> material, Type materialType);
 
-void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt);
-void _Update(Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt);
+void _Render(SDL_State& state, Block* grid, std::vector<std::shared_ptr<Material>>& materials, float dt);
+void _Update(Block* grid, std::vector<std::shared_ptr<Material>>& materials, float dt);

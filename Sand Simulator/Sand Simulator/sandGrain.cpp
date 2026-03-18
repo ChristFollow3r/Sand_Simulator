@@ -1,6 +1,6 @@
 #include "sandGrain.h"
 
-void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
+void SandGrain::ApplyPhysics(Block* grid) {
 
 	int random = rand() % 101;
 
@@ -25,8 +25,7 @@ void SandGrain::ApplyPhysics(Block(&grid)[gridSize]) {
 		};
 
 	if (gridIndex + cols >= gridSize) return;
-
-	if (grid[this->gridIndex + cols].type == AirType || grid[this->gridIndex + cols].type == WaterType) moveTo(this->gridIndex + cols);
+	if (grid[this->gridIndex + cols].type == AirType) moveTo(this->gridIndex + cols);
 
 	else {
 

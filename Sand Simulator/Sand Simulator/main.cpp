@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 	deltaTime(lastTick);
 
 	std::vector<std::shared_ptr<Material>> materials;
-	Block Grid[gridSize];
+	Block* Grid = new Block[gridSize];
 	_AssignBlockRects(Grid); 
 
 	int selectedMaterial = 0;
