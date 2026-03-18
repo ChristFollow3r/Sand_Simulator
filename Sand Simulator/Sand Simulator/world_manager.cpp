@@ -2,6 +2,7 @@
 #include "sandGrain.h"
 #include "water.h"
 #include "stone.h"
+#include "dirt.h"
 #include <algorithm>
 #include <vector>
 
@@ -71,7 +72,12 @@ void _CreateMaterial(Block(&grid)[gridSize], std::vector<std::shared_ptr<Materia
 					material = std::make_shared<Stone>(rect, state.renderer);
 					currentType = StoneType;
 					break;
+				case 3:
+					material = std::make_shared<Dirt>(rect, state.renderer);
+					currentType = DirtType;
+					break;
 				}
+				
 				_AtachMaterial(grid, material, currentType);
 				materials.push_back(material);
 
@@ -124,7 +130,7 @@ void _AtachMaterial(Block (&grid)[gridSize], std::shared_ptr<Material> material,
 }
 
 void _Render(SDL_State& state, Block(&grid)[gridSize], std::vector<std::shared_ptr<Material>>& materials, float dt) {
-	SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(state.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(state.renderer);
 	_Update(grid, materials, dt);
 	SDL_RenderPresent(state.renderer);

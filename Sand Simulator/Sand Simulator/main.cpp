@@ -41,6 +41,17 @@ int main(int argc, char *argv[]) {
 					if (event.key.key == SDLK_1) selectedMaterial = 0;
 					if (event.key.key == SDLK_2) selectedMaterial = 1;
 					if (event.key.key == SDLK_3) selectedMaterial = 2;
+					if (event.key.key == SDLK_4) selectedMaterial = 3;
+					if (event.key.key == SDLK_DELETE) {
+						while (!materials.empty()) {
+							materials.pop_back();
+						}
+						for (int i = 0; i < gridSize; i++)
+						{
+							Grid[i].type = AirType;
+							Grid[i].materialPointer = nullptr;
+						}
+					}
 					if (event.key.key == SDLK_ESCAPE) exit(0);
 					break;
 			}
