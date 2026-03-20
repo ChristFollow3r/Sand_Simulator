@@ -35,7 +35,7 @@ void Seed::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& add
 	}
 
 
-	bool theresWater = [&]() {
+	bool theresWaterAroundDirt = [&]() {
 		for (int i = 0; i < 5; i++){
 
 			auto check = [&](int index) {
@@ -58,11 +58,13 @@ void Seed::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& add
 	}();
 
 
-	if (theresWater && !hasGrown) {
+	if (theresWaterAroundDirt && !hasGrown) {
 
 		this->growthRate -= dt;
-		int rGrowth = rand() % 4;
+		int rGrowth = rand() % 60;
 		int target = gridIndex - cols + rGrowth;
+
+		if (target < 0 || target >= gridSize) return;
 
 		if (this->growthRate < 0) {
 			this->growthRate = rGrowth;
@@ -70,8 +72,10 @@ void Seed::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& add
 			green->gridIndex = target;
 			green->color = { 87, 192, 79, 255 };
 			green->hasGrown = true;
+
 			additions.push_back(green);
 			this->growthRate = rGrowth;
+			this->maxGrowth--;
 			if (maxGrowth <= 0) hasGrown = true;
 		}
 	}
