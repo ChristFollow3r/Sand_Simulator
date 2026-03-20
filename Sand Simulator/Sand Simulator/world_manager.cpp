@@ -147,7 +147,7 @@ void _Update(Block* grid, std::vector<std::shared_ptr<Material>>& materials, flo
 		x->DrawRectangle();
 		x->moverTimer += dt;
 		if (x->moverTimer >= x->fallingSpeed) {
-			x->ApplyPhysics(grid, additions);
+			x->ApplyPhysics(grid, additions, dt);
 			x->moverTimer = 0;
 		}
 	}

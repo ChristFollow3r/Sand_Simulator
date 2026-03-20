@@ -1,6 +1,6 @@
 #include "seed.h"
 
-void Seed::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions) {
+void Seed::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions, float dt) {
 
 	int random = rand() % 101;
 
@@ -57,16 +57,23 @@ void Seed::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& add
 		return false;
 	}();
 
+
 	if (theresWater && !hasGrown) {
-		for (int i = 1; i < 7; i++)
-		{	
-			int target = gridIndex - cols * i;
+
+		this->growthRate -= dt;
+		int rGrowth = rand() % 4;
+		int target = gridIndex - cols + rGrowth;
+
+		if (this->growthRate < 0) {
+			this->growthRate = rGrowth;
 			auto green = std::make_shared<Seed>(grid[target].rect, renderer);
 			green->gridIndex = target;
 			green->color = { 87, 192, 79, 255 };
+			green->hasGrown = true;
 			additions.push_back(green);
+			this->growthRate = rGrowth;
+			if (maxGrowth <= 0) hasGrown = true;
 		}
-		hasGrown = true;
 	}
 
 }

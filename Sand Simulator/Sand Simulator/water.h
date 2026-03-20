@@ -12,6 +12,6 @@ public:
 	Water(SDL_FRect rect, SDL_Renderer* renderer) : Material(rect, Colors[rand() % 5], renderer) {
 		fallingSpeed = 0.0001f;
 	};
-	void ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions) override;
+	void ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions, float dt) override;
 
 };

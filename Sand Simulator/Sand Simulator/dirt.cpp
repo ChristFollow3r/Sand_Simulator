@@ -1,6 +1,6 @@
 #include "dirt.h"
 
-void Dirt::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions) {
+void Dirt::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions, float dt) {
 
 	int random = rand() % 101;
 

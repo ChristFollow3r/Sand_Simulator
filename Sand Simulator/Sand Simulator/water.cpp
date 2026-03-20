@@ -1,6 +1,6 @@
 #include "water.h"
 
-void Water::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions) {
+void Water::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions, float dt) {
 
 	auto moveTo = [&](int targetPosition) {
 		grid[this->gridIndex].type = AirType;

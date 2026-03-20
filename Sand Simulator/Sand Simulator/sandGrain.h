@@ -11,6 +11,6 @@ public:
 	SandGrain(SDL_FRect rect, SDL_Renderer* renderer) : Material(rect, Colors[rand() % 5], renderer) {
 		fallingSpeed = 0.002f;
 	};
-	void ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions) override;
+	void ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions, float dt) override;
 
 };
