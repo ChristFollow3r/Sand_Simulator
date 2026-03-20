@@ -1,6 +1,6 @@
 #include "seed.h"
 
-void Seed::ApplyPhysics(Block* grid) {
+void Seed::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions) {
 
 	int random = rand() % 101;
 
@@ -35,36 +35,38 @@ void Seed::ApplyPhysics(Block* grid) {
 	}
 
 
-	//bool theresWater = [&]() {
-	//	for (int i = 0; i < 5; i++){
+	bool theresWater = [&]() {
+		for (int i = 0; i < 5; i++){
 
-	//		// Bound Checks
-	//		if (gridIndex + i >= gridSize || gridIndex + cols + i >= gridSize ||
-	//			gridIndex + (2 + cols) + i >= gridSize ||
-	//			gridIndex + (3 + cols) + i >= gridSize) continue;
-	//		if (gridIndex - i < 0) continue;
+			auto check = [&](int index) {
+				return index >= 0 && index < gridSize && grid[index].type == WaterType;
+				};
 
+			// Look for WaterType
+			if (check(gridIndex + i) ||
+				check(gridIndex - i) ||
+				check(gridIndex + cols + i) ||
+				check(gridIndex + cols - i) || 
+				check(gridIndex + (2 * cols) + i) ||
+				check(gridIndex + (2 * cols) - i) ||
+				check(gridIndex + (3 * cols) + i) ||
+				check(gridIndex + (3 * cols) - i))
+				return true;
 
-	//		// Look for WaterType
-	//		if (grid[this->gridIndex + i].type == WaterType ||
-	//			grid[this->gridIndex - i].type == WaterType ||
-	//			grid[this->gridIndex + cols + i].type == WaterType ||
-	//			grid[this->gridIndex + cols - i].type == WaterType ||
-	//			grid[this->gridIndex + (2 * cols) + i].type == WaterType ||
-	//			grid[this->gridIndex + (2 * cols) - i].type == WaterType ||
-	//			grid[this->gridIndex + (3 * cols) + i].type == WaterType ||
-	//			grid[this->gridIndex + (3 * cols) - i].type == WaterType
-	//			) return true;
+		}
+		return false;
+	}();
 
-	//	}
-	//	return false;
-	//}();
-
-	//if (theresWater) {
-	//	for (int i = 1; i < 7; i++)
-	//	{	
-	//		int target = gridIndex - cols * i;
-	//	}
-	//}
+	if (theresWater && !hasGrown) {
+		for (int i = 1; i < 7; i++)
+		{	
+			int target = gridIndex - cols * i;
+			auto green = std::make_shared<Seed>(grid[target].rect, renderer);
+			green->gridIndex = target;
+			green->color = { 87, 192, 79, 255 };
+			additions.push_back(green);
+		}
+		hasGrown = true;
+	}
 
 }

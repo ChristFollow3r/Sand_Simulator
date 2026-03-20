@@ -10,5 +10,5 @@ public:
 	Dirt(SDL_FRect rect, SDL_Renderer* renderer) : Material(rect, Colors[rand() % 5], renderer) {
 		fallingSpeed = 0.0002;
 	};
-	void ApplyPhysics(Block* grid) override;
+	void ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions) override;
 };

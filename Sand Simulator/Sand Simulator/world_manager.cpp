@@ -142,13 +142,20 @@ void _Render(SDL_State& state, Block* grid, std::vector<std::shared_ptr<Material
 }
 
 void _Update(Block* grid, std::vector<std::shared_ptr<Material>>& materials, float dt) {
-	materials.reserve(materials.size() + 30000);
+	std::vector<std::shared_ptr<Material>> additions;
 	for (auto x : materials) {
 		x->DrawRectangle();
 		x->moverTimer += dt;
 		if (x->moverTimer >= x->fallingSpeed) {
-			x->ApplyPhysics(grid);
+			x->ApplyPhysics(grid, additions);
 			x->moverTimer = 0;
 		}
 	}
+	for (auto x : additions) {
+		materials.push_back(x);
+		grid[x->gridIndex].materialPointer = x;
+		grid[x->gridIndex].type = SeedType;
+		x->rect = grid[x->gridIndex].rect;
+	}
+	while (!additions.empty()) additions.pop_back();
 }

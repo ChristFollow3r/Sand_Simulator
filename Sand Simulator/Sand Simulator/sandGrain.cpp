@@ -1,6 +1,6 @@
 #include "sandGrain.h"
 
-void SandGrain::ApplyPhysics(Block* grid) {
+void SandGrain::ApplyPhysics(Block* grid, std::vector<std::shared_ptr<Material>>& additions) {
 
 	int random = rand() % 101;
 
