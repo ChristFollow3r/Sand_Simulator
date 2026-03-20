@@ -35,36 +35,36 @@ void Seed::ApplyPhysics(Block* grid) {
 	}
 
 
-	bool theresWater = [&]() {
-		for (int i = 0; i < 5; i++){
+	//bool theresWater = [&]() {
+	//	for (int i = 0; i < 5; i++){
 
-			// Bound Checks
-			if (gridIndex + i >= gridSize || gridIndex + cols + i >= gridSize ||
-				gridIndex + (2 + cols) + i >= gridSize ||
-				gridIndex + (3 + cols) + i >= gridSize) continue;
-			if (gridIndex - i < 0) continue;
+	//		// Bound Checks
+	//		if (gridIndex + i >= gridSize || gridIndex + cols + i >= gridSize ||
+	//			gridIndex + (2 + cols) + i >= gridSize ||
+	//			gridIndex + (3 + cols) + i >= gridSize) continue;
+	//		if (gridIndex - i < 0) continue;
 
 
-			// Look for WaterType
-			if (grid[this->gridIndex + i].type == WaterType ||
-				grid[this->gridIndex - i].type == WaterType ||
-				grid[this->gridIndex + cols + i].type == WaterType ||
-				grid[this->gridIndex + cols - i].type == WaterType ||
-				grid[this->gridIndex + (2 * cols) + i].type == WaterType ||
-				grid[this->gridIndex + (2 * cols) - i].type == WaterType ||
-				grid[this->gridIndex + (3 * cols) + i].type == WaterType ||
-				grid[this->gridIndex + (3 * cols) - i].type == WaterType
-				) return true;
+	//		// Look for WaterType
+	//		if (grid[this->gridIndex + i].type == WaterType ||
+	//			grid[this->gridIndex - i].type == WaterType ||
+	//			grid[this->gridIndex + cols + i].type == WaterType ||
+	//			grid[this->gridIndex + cols - i].type == WaterType ||
+	//			grid[this->gridIndex + (2 * cols) + i].type == WaterType ||
+	//			grid[this->gridIndex + (2 * cols) - i].type == WaterType ||
+	//			grid[this->gridIndex + (3 * cols) + i].type == WaterType ||
+	//			grid[this->gridIndex + (3 * cols) - i].type == WaterType
+	//			) return true;
 
-		}
-		return false;
-	}();
+	//	}
+	//	return false;
+	//}();
 
-	if (theresWater) {
-		for (int i = 1; i < 7; i++)
-		{	
-			int target = gridIndex - cols * i;
-		}
-	}
+	//if (theresWater) {
+	//	for (int i = 1; i < 7; i++)
+	//	{	
+	//		int target = gridIndex - cols * i;
+	//	}
+	//}
 
 }
