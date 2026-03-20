@@ -3,6 +3,7 @@
 #include "water.h"
 #include "stone.h"
 #include "dirt.h"
+#include "seed.h"
 #include <algorithm>
 #include <vector>
 
@@ -76,6 +77,10 @@ void _CreateMaterial(Block* grid, std::vector<std::shared_ptr<Material>>& materi
 					material = std::make_shared<Dirt>(rect, state.renderer);
 					currentType = DirtType;
 					break;
+				case 4:
+					material = std::make_shared<Seed>(rect, state.renderer);
+					currentType = SeedType;
+					break;
 				}
 				
 				_AtachMaterial(grid, material, currentType);
@@ -137,6 +142,7 @@ void _Render(SDL_State& state, Block* grid, std::vector<std::shared_ptr<Material
 }
 
 void _Update(Block* grid, std::vector<std::shared_ptr<Material>>& materials, float dt) {
+	materials.reserve(materials.size() + 30000);
 	for (auto x : materials) {
 		x->DrawRectangle();
 		x->moverTimer += dt;

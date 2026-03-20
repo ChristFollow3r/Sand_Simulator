@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <iostream>
+#include <vector>
 #include "utils.h"
 #include "rectangle.h"
 

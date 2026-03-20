@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
 					if (event.key.key == SDLK_2) selectedMaterial = 1;
 					if (event.key.key == SDLK_3) selectedMaterial = 2;
 					if (event.key.key == SDLK_4) selectedMaterial = 3;
+					if (event.key.key == SDLK_5) selectedMaterial = 4;
 					if (event.key.key == SDLK_DELETE) {
 						while (!materials.empty()) {
 							materials.pop_back();

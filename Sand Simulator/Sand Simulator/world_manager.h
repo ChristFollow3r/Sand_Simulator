@@ -11,6 +11,7 @@ enum Type {
 	WaterType,
 	StoneType,
 	DirtType,
+	SeedType,
 	FireType
 };
 

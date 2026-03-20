@@ -136,6 +136,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rectangle.cpp" />
     <ClCompile Include="sandGrain.cpp" />
+    <ClCompile Include="seed.cpp" />
     <ClCompile Include="stone.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="water.cpp" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="dirt.h" />
     <ClInclude Include="sandGrain.h" />
+    <ClInclude Include="seed.h" />
     <ClInclude Include="stone.h" />
     <ClInclude Include="water.h" />
     <ClInclude Include="world_manager.h" />
